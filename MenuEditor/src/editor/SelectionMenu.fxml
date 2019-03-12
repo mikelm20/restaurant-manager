@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXSpinner?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<StackPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="editor.SelectionMenuController">
+   <children>
+      <AnchorPane prefHeight="600.0" prefWidth="900.0">
+         <children>
+            <AnchorPane fx:id="leftPane" prefHeight="604.0" prefWidth="453.0" style="-fx-background-color: #f4c542;">
+               <children>
+                  <JFXButton fx:id="categoriesButton" buttonType="RAISED" layoutX="66.0" layoutY="80.0" opacity="1" prefHeight="153.0" prefWidth="317.0" ripplerFill="black" style="-fx-background-color: black;" text="Categories">
+                     <font>
+                        <Font name="DIN Alternate Bold" size="44.0" />
+                     </font>
+                  </JFXButton>
+                  <ImageView fx:id="categoriesImage" fitHeight="280.0" fitWidth="279.0" layoutX="85.0" layoutY="260.0" preserveRatio="true">
+                     <image>
+                        <Image url="@../Resources/categories.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="rigthPane" layoutX="451.0" layoutY="2.0" prefHeight="604.0" prefWidth="450.0" style="-fx-background-color: black;">
+               <children>
+                  <JFXButton fx:id="dishesButton" buttonType="RAISED" layoutX="87.0" layoutY="361.0" opacity="1" prefHeight="69.0" prefWidth="317.0" ripplerFill="WHITE" style="-fx-background-color: #f4c542;" text="Dishes">
+                     <font>
+                        <Font name="DIN Alternate Bold" size="36.0" />
+                     </font>
+                  </JFXButton>
+                  <ImageView fx:id="dishesImage" fitHeight="320.0" fitWidth="313.0" layoutX="87.0" layoutY="92.0" preserveRatio="true">
+                     <image>
+                        <Image url="@../Resources/dish.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+      <JFXSpinner fx:id="spinner" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="153.0" prefWidth="172.0" />
+   </children>
+</StackPane>

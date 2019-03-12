@@ -1,0 +1,32 @@
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+
+.scroll-bar:vertical {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar:vertical .track-background {
+    visibility: hidden;
+}
+
+.scroll-bar:vertical .track {
+    visibility: hidden;
+}
+
+.scroll-bar:vertical .thumb {
+    -fx-background-color: gray;
+    -fx-opacity: 0.5;
+    -fx-border-radius: 5;
+}
+
+#addButton{
+    -fx-background-image: url("/Resources/addIcon.png");
+    -fx-background-size: 30px 30px;
+}
+
+#backButton{
+    -fx-background-image: url("/Resources/back.png");
+    -fx-background-size: 40px 40px;
+}
