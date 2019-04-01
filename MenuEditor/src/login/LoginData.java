@@ -10,7 +10,7 @@ import javax.persistence.*;
 
 
 @Entity
-
+@Table(name = "LoginData", schema = "login_db", catalog = "")
 public class LoginData implements Serializable {
 
     private static final long serialVersionUID = 1L;
