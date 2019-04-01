@@ -62,6 +62,7 @@ public class CategoriesScreenController implements Initializable {
     private StackPane contentPane;
     private File uploadedImage;
     private JFXButton addButton;
+    private JFXButton generateXML;
 
 
 
@@ -75,7 +76,7 @@ public class CategoriesScreenController implements Initializable {
         {
             updateCategory.setImage(uploadedImage.getName());
             Path source = Paths.get(uploadedImage.getAbsolutePath());
-            Path dest = Paths.get("/home/user/IdeaProjects/MenuEditor/src/Resources/CategoriesImages/"+uploadedImage.getName());
+            Path dest = Paths.get(FTPURL.getImageURL()+"/CategoriesImages/"+uploadedImage.getName());
             try {
                 Files.copy(source, dest, StandardCopyOption.REPLACE_EXISTING);
             } catch (Exception e) {
@@ -152,7 +153,7 @@ public class CategoriesScreenController implements Initializable {
                name = lista[lista.length - 1];
                Category categoria = eb.getCategory(name);
                System.out.println(categoria.getImage());
-               Image imagen = new Image("/Resources/CategoriesImages/"+categoria.getImage());
+               Image imagen = new Image(FTPURL.getImageURL()+"/CategoriesImages/"+categoria.getImage());
                this.selectedImage = imagen;
                imageView.setImage(imagen);
                description.setText(categoria.getDescription());
@@ -176,7 +177,7 @@ public class CategoriesScreenController implements Initializable {
 
    public void onClickEdit(ActionEvent editEvent) {
        rigthPane.getChildren().removeAll(imageView, description, edit, tituloImagen);
-       topPane.getChildren().removeAll(addButton);
+       topPane.getChildren().removeAll(addButton,generateXML);
        saveButton = new JFXButton();
        removeButton = new JFXButton();
        cancelButton = new JFXButton();
@@ -315,6 +316,7 @@ public class CategoriesScreenController implements Initializable {
         tituloImagen = new Label();
         edit = new JFXButton();
         addButton = new JFXButton();
+        generateXML = new JFXButton();
 
 
         rootPane.setPrefWidth(900);
@@ -378,12 +380,25 @@ public class CategoriesScreenController implements Initializable {
 
         });
 
+        generateXML.setText("GENERATE MENU");
+        generateXML.setLayoutY(2);
+        generateXML.setLayoutX(580);
+        generateXML.setMaxHeight(80);
+        generateXML.setMaxWidth(200);
+        generateXML.setFont(Font.font("DIN Alternate Bold", 20));
+        generateXML.setStyle("-fx-background-color: white;");
+
+        generateXML.setOnAction(e->{
+            eb.getMenu();
+        });
+
+
         this.setButton(edit, 40, 60, (900 - 900 / 5) - 100, 50, "edit", "#f4c542", "white", 16);
         edit.setVisible(true);
 
         List<Category> categorias = eb.getCategories();
         if(categorias.size()!=0) {
-            Image imagen = new Image("/Resources/CategoriesImages/" + categorias.get(0).getImage());
+            Image imagen = new Image(FTPURL.getImageURL()+"/CategoriesImages/" + categorias.get(0).getImage());
             this.selectedImage = imagen;
             imageView.setImage(imagen);
             description.setText(categorias.get(0).getDescription());
@@ -405,7 +420,7 @@ public class CategoriesScreenController implements Initializable {
             leftPane.setStyle("-fx-background-color: black");
 
 
-            topPane.getChildren().add(addButton);
+            topPane.getChildren().addAll(addButton,generateXML);
 
             this.createLabels(categorias);
             scrollPane.setContent(leftPane);
@@ -417,7 +432,7 @@ public class CategoriesScreenController implements Initializable {
 
     private void onClickAdd() {
         rigthPane.getChildren().removeAll(imageView, description, edit, tituloImagen);
-        topPane.getChildren().removeAll(addButton);
+        topPane.getChildren().removeAll(addButton,generateXML);
         saveButton = new JFXButton();
         cancelButton = new JFXButton();
         nameEnter = new TextField();
@@ -495,7 +510,7 @@ public class CategoriesScreenController implements Initializable {
             edit.setVisible(true);
             String name = selectedCategory.getName();
             Category categoria = eb.getCategory(name);
-            Image imagen = new Image("/Resources/CategoriesImages/"+categoria.getImage());
+            Image imagen = new Image(FTPURL.getImageURL()+"/CategoriesImages/"+categoria.getImage());
             this.selectedImage = imagen;
             imageView.setImage(imagen);
             description.setText(categoria.getDescription());
@@ -576,7 +591,7 @@ public class CategoriesScreenController implements Initializable {
         if(uploadedImage != null) {
             category.setImage(uploadedImage.getName());
             Path source = Paths.get(uploadedImage.getAbsolutePath());
-            Path dest = Paths.get("/home/user/IdeaProjects/MenuEditor/src/Resources/CategoriesImages/" + uploadedImage.getName());
+            Path dest = Paths.get(FTPURL.getImageURL()+"/CategoriesImages/" + uploadedImage.getName());
             try {
                 Files.copy(source, dest, StandardCopyOption.REPLACE_EXISTING);
             } catch (Exception e) {

@@ -1,5 +1,7 @@
 package editor;
 
+import org.simpleframework.xml.Root;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -18,6 +20,18 @@ public class Dish {
     private Double salt;
     private Double weight;
     private String image;
+    private Double proteins;
+
+
+    @Basic
+    @Column(name = "proteins", nullable = true, precision = 0)
+    public Double getProteins() {
+        return proteins;
+    }
+
+    public void setProteins(Double proteins) {
+        this.proteins = proteins;
+    }
 
     @Id
     @Column(name = "idDishes", nullable = false)

@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
 import java.time.Duration;
+import java.util.List;
 
 
 /**
@@ -98,6 +99,16 @@ public boolean tryUser(String user){
 
     public boolean isFirstLogin(){
         return !(em.createQuery("SELECT l FROM LoginData l").getResultList().size() > 1);
+
+    }
+
+    public LoginData getUserData(){
+
+        List<LoginData> userData = (List<LoginData>)em.createQuery("SELECT l FROM LoginData l ").getResultList();
+
+        return userData.get(1);
+
+
 
     }
     

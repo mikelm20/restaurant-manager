@@ -33,14 +33,16 @@
             </Label>
             </AnchorPane>
 
-            <JFXTextField fx:id="username" layoutX="300" layoutY="170.0" prefHeight="60" prefWidth="360" promptText="Username" />
-            <JFXPasswordField fx:id="password" layoutX="300" layoutY="260.0" prefHeight="60" prefWidth="360" promptText="Password" />
-            <JFXPasswordField fx:id="confpassword" layoutX="300" layoutY="350.0" prefHeight="60" prefWidth="360" promptText="Confirm Password" />
+            <JFXTextField fx:id="username" layoutX="300" layoutY="150.0" prefHeight="60" prefWidth="360" promptText="Username" />
+            <JFXPasswordField fx:id="password" layoutX="300" layoutY="200.0" prefHeight="60" prefWidth="360" promptText="Password" />
+            <JFXPasswordField fx:id="confpassword" layoutX="300" layoutY="250.0" prefHeight="60" prefWidth="360" promptText="Confirm Password" />
+            <JFXTextField fx:id="restaurantName" layoutX="300" layoutY="300.0" prefHeight="60" prefWidth="360" promptText="Restaurant Name" />
             <JFXButton fx:id="singupButton" buttonType="RAISED" defaultButton="true" layoutX="630.0" layoutY="500.0" onAction="#onHandlerClick" prefHeight="38.0" prefWidth="110.0" style="-fx-background-color: #f4c542;" text="Ok" textFill="WHITE">
                <font>
                   <Font size="19.0" />
                </font></JFXButton>
-            <JFXColorPicker fx:id="colorPicker" layoutX="300" layoutY="450.0"></JFXColorPicker>
+            <JFXColorPicker fx:id="colorPicker" layoutX="300" layoutY="400.0"></JFXColorPicker>
+            <JFXColorPicker fx:id="colorSecundarioPicker" layoutX="300" layoutY="450.0"></JFXColorPicker>
             <Label fx:id="errorLabel" layoutX="292.0" layoutY="500" prefHeight="22.0" prefWidth="289.0" />
          </children>
       </AnchorPane>

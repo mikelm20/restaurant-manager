@@ -26,6 +26,13 @@
     -fx-background-size: 30px 30px;
 }
 
+#generateXML{
+
+    -fx-background-image: url("/Resources/addIcon.png");
+    -fx-background-size: 30px 30px;
+
+}
+
 #backButton{
     -fx-background-image: url("/Resources/back.png");
     -fx-background-size: 40px 40px;

@@ -25,6 +25,11 @@ public class LoginData implements Serializable {
 
     private String color;
 
+    private String colorSecundario;
+
+    private String nombre;
+
+
 
     public LoginData()
     {
@@ -69,6 +74,22 @@ public class LoginData implements Serializable {
     public String getColor(){return color;}
 
     public void setColor(String color){this.color=color;}
+
+    public String getColorSecundario() {
+        return colorSecundario;
+    }
+
+    public void setColorSecundario(String colorSecundario) {
+        this.colorSecundario = colorSecundario;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
    
     

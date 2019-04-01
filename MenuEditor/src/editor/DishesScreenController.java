@@ -86,6 +86,8 @@ public class DishesScreenController implements Initializable {
     private TextField weight;
     private ChoiceBox selector;
     private Dish selectedShowDish;
+    private TextField proteins;
+    private JFXButton generateXML;
 
 
 
@@ -114,6 +116,7 @@ public class DishesScreenController implements Initializable {
                 "Carbohydrates: "+plato.getCarboHydrates().toString()+"\n"+
                 "Salt: " + plato.getSalt().toString() + "\n"+
                 "Saturated Fat: " +plato.getSaturedFat().toString()+"\n"+
+                "Proteins: " +plato.getProteins().toString()+"\n"+
                 "Fat: "+plato.getFat().toString()+"\n"+
                 "Sugar: "+plato.getSugars().toString()+"\n"+
                 "Weight: "+plato.getWeight().toString();
@@ -144,7 +147,7 @@ public class DishesScreenController implements Initializable {
                 name = lista[lista.length - 1];
                 Dish plato = eb.getDish(name);
                 System.out.println(plato.getImage());
-                Image imagen = new Image("/Resources/DishesImages/"+plato.getImage());
+                Image imagen = new Image(FTPURL.getImageURL()+"/DishesImages/"+plato.getImage());
                 this.selectedImage = imagen;
                 imageView.setImage(imagen);
                 description.setText(plato.getDescription());
@@ -221,7 +224,7 @@ public class DishesScreenController implements Initializable {
     private void onClickEditAllergens(){
         rigthPane.getChildren().clear();
         leftPane.setDisable(true);
-        topPane.getChildren().remove(addButton);
+        topPane.getChildren().removeAll(addButton,generateXML);
         Label tituloAlergenos = new Label();
         tituloAlergenos.setLayoutX(50);
         tituloAlergenos.setLayoutY(80);
@@ -318,7 +321,7 @@ public class DishesScreenController implements Initializable {
         editDish.setVisible(true);
         String name = selectedShowDish.getName();
         Dish dish = eb.getDish(name);
-        Image imagen = new Image("/Resources/DishesImages/"+dish.getImage());
+        Image imagen = new Image(FTPURL.getImageURL()+"/DishesImages/"+dish.getImage());
         this.selectedImage = imagen;
         imageView.setImage(imagen);
         description.setText(dish.getDescription());
@@ -359,7 +362,7 @@ public class DishesScreenController implements Initializable {
 
         rigthPane.getChildren().removeAll(categoria, tituloCategorias, imageView, description, editDish,editAllergens, tituloImagen,iconsHolder,nutritionInfo);
         rigthPane.getChildren().clear();
-        topPane.getChildren().removeAll(addButton);
+        topPane.getChildren().removeAll(addButton,generateXML);
         saveButton = new JFXButton();
         cancelButton = new JFXButton();
         nameEnter = new TextField();
@@ -391,7 +394,7 @@ public class DishesScreenController implements Initializable {
             {
                 newDish.setImage(uploadedImage.getName());
                 Path source = Paths.get(uploadedImage.getAbsolutePath());
-                Path dest = Paths.get("/home/user/IdeaProjects/MenuEditor/src/Resources/DishesImages/"+uploadedImage.getName());
+                Path dest = Paths.get(FTPURL.getImageURL()+"/DishesImages/"+uploadedImage.getName());
                 try {
                     Files.copy(source, dest, StandardCopyOption.REPLACE_EXISTING);
                 } catch (Exception e) {
@@ -407,6 +410,7 @@ public class DishesScreenController implements Initializable {
             newDish.setPrice(Double.parseDouble(priceValue.getText()));
            newDish.setEnergy(Double.parseDouble(energy.getText()));
             newDish.setSaturedFat(Double.parseDouble(saturated.getText()));
+            newDish.setProteins(Double.parseDouble(proteins.getText()));
             newDish.setSugars(Double.parseDouble(sugar.getText()));
             newDish.setSalt(Double.parseDouble(salt.getText()));
             newDish.setFat(Double.parseDouble(fat.getText()));
@@ -414,7 +418,7 @@ public class DishesScreenController implements Initializable {
             newDish.setCarboHydrates(Double.parseDouble(carbohydrates.getText()));
 
 
-            rigthPane.getChildren().removeAll(tituloPrecio,selector,weight,sugar, fat, saturated, salt, carbohydrates, tituloCategorias, nutritionInfo, energy, priceValue, contentPane,descriptionEnter,removeButton, cancelButton, saveButton,nameEnter);
+            rigthPane.getChildren().removeAll(tituloPrecio,selector,weight,sugar, fat, saturated,proteins, salt, carbohydrates, tituloCategorias, nutritionInfo, energy, priceValue, contentPane,descriptionEnter,removeButton, cancelButton, saveButton,nameEnter);
             contentPane.getChildren().remove(imageView);
             eb.addDish(newDish, selector.getValue().toString());
             selectedShowDish = eb.getDish(newDish.getName());
@@ -435,10 +439,10 @@ public class DishesScreenController implements Initializable {
         nameEnter.setPromptText("NAME");
 
         tituloDescripcion.setLayoutX(360);
-        tituloDescripcion.setLayoutY(370);
+        tituloDescripcion.setLayoutY(400);
 
         descriptionEnter.setLayoutX(360);
-        descriptionEnter.setLayoutY(400);
+        descriptionEnter.setLayoutY(440);
         descriptionEnter.setMaxHeight(100);
         descriptionEnter.setMaxWidth(350);
         descriptionEnter.setWrapText(true);
@@ -486,7 +490,8 @@ public class DishesScreenController implements Initializable {
                 "Saturated Fat: \n\n"+
                 "Fat: \n\n"+
                 "Sugar: \n\n"+
-                "Weight: ");
+                "Weight: \n\n"+
+                "Proteins: ");
         energy = new TextField();
         energy.setLayoutY(nutritionInfo.getLayoutY()-7);
         energy.setLayoutX(nutritionInfo.getLayoutX()+160);
@@ -511,6 +516,8 @@ public class DishesScreenController implements Initializable {
         saturated.setPromptText("0.0");
         saturated.setPrefSize(70,10);
 
+
+
         fat = new TextField();
         fat.setLayoutY(nutritionInfo.getLayoutY()+132);
         fat.setLayoutX(nutritionInfo.getLayoutX()+160);
@@ -529,6 +536,13 @@ public class DishesScreenController implements Initializable {
         weight.setPromptText("0.0");
         weight.setPrefSize(70,10);
 
+
+        proteins = new TextField();
+        proteins.setLayoutY(nutritionInfo.getLayoutY()+228);
+        proteins.setLayoutX(nutritionInfo.getLayoutX()+160);
+        proteins.setPromptText("0.0");
+        proteins.setPrefSize(70,10);
+
         List<Category> categorias = eb.getCategories();
 
         selector = new ChoiceBox();
@@ -543,7 +557,7 @@ public class DishesScreenController implements Initializable {
         selector.setLayoutY(tituloCategorias.getLayoutY()+30);
 
         contentPane.getChildren().add(imageView);
-        rigthPane.getChildren().addAll(selector,weight,sugar, fat, saturated, salt, carbohydrates, nutritionInfo, energy, priceValue, contentPane,descriptionEnter, cancelButton, saveButton,nameEnter);
+        rigthPane.getChildren().addAll(selector,weight,sugar, fat,proteins, saturated, salt, carbohydrates, nutritionInfo, energy, priceValue, contentPane,descriptionEnter, cancelButton, saveButton,nameEnter);
 
         rigthPane.getChildren().addAll(tituloAlergenos,tituloCategorias,tituloNutricion,tituloDescripcion,tituloPrecio);
         leftPane.setDisable(true);
@@ -557,7 +571,7 @@ public class DishesScreenController implements Initializable {
 
     public void onClickEdit(ActionEvent editEvent) {
         rigthPane.getChildren().removeAll(tituloDescripcion,categoria, tituloCategorias, imageView, description, editDish,editAllergens, tituloImagen,iconsHolder,nutritionInfo);
-        topPane.getChildren().removeAll(addButton);
+        topPane.getChildren().removeAll(addButton,generateXML);
         saveButton = new JFXButton();
         removeButton = new JFXButton();
         cancelButton = new JFXButton();
@@ -599,7 +613,7 @@ public class DishesScreenController implements Initializable {
             {
                 updateDish.setImage(uploadedImage.getName());
                 Path source = Paths.get(uploadedImage.getAbsolutePath());
-                Path dest = Paths.get("/home/user/IdeaProjects/MenuEditor/src/Resources/DishesImages/"+uploadedImage.getName());
+                Path dest = Paths.get(FTPURL.getImageURL()+"/DishesImages/"+uploadedImage.getName());
                 try {
                     Files.copy(source, dest, StandardCopyOption.REPLACE_EXISTING);
                 } catch (Exception e) {
@@ -615,6 +629,7 @@ public class DishesScreenController implements Initializable {
             updateDish.setPrice(Double.parseDouble(priceValue.getText()));
             updateDish.setEnergy(Double.parseDouble(energy.getText()));
             updateDish.setSaturedFat(Double.parseDouble(saturated.getText()));
+            updateDish.setProteins(Double.parseDouble(proteins.getText()));
             updateDish.setSugars(Double.parseDouble(sugar.getText()));
             updateDish.setSalt(Double.parseDouble(salt.getText()));
             updateDish.setFat(Double.parseDouble(fat.getText()));
@@ -622,7 +637,7 @@ public class DishesScreenController implements Initializable {
             updateDish.setCarboHydrates(Double.parseDouble(carbohydrates.getText()));
 
             eb.updateDish(updateDish,selectedDish.getIdDishes(),selector.getValue().toString());
-            rigthPane.getChildren().removeAll(tituloPrecio,selector,weight,sugar, fat, saturated, salt, carbohydrates, tituloCategorias, nutritionInfo, energy, priceValue, contentPane,descriptionEnter,removeButton, cancelButton, saveButton,nameEnter);
+            rigthPane.getChildren().removeAll(tituloPrecio,selector,weight,sugar, fat, saturated,proteins, salt, carbohydrates, tituloCategorias, nutritionInfo, energy, priceValue, contentPane,descriptionEnter,removeButton, cancelButton, saveButton,nameEnter);
             contentPane.getChildren().remove(imageView);
             this.initializeDishesScreen();
 
@@ -662,7 +677,7 @@ public class DishesScreenController implements Initializable {
         removeButton.setOnAction((ActionEvent remove)->{
 
             eb.removeDish(selectedDish.getIdDishes());
-            rigthPane.getChildren().removeAll(selector,weight,sugar, fat, saturated, salt, carbohydrates, tituloCategorias, nutritionInfo, energy, priceValue, contentPane,descriptionEnter,removeButton, cancelButton, saveButton,nameEnter);
+            rigthPane.getChildren().removeAll(selector,weight,sugar, fat,proteins,saturated, salt, carbohydrates, tituloCategorias, nutritionInfo, energy, priceValue, contentPane,descriptionEnter,removeButton, cancelButton, saveButton,nameEnter);
             contentPane.getChildren().remove(imageView);
             this.initializeDishesScreen();
 
@@ -683,10 +698,10 @@ public class DishesScreenController implements Initializable {
         nameEnter.setText(selectedDish.getName());
 
         tituloDescripcion.setLayoutX(360);
-        tituloDescripcion.setLayoutY(370);
+        tituloDescripcion.setLayoutY(400);
 
         descriptionEnter.setLayoutX(360);
-        descriptionEnter.setLayoutY(400);
+        descriptionEnter.setLayoutY(430);
         descriptionEnter.setMaxHeight(100);
         descriptionEnter.setMaxWidth(350);
         descriptionEnter.setWrapText(true);
@@ -729,7 +744,8 @@ public class DishesScreenController implements Initializable {
                 "Saturated Fat: \n\n"+
                 "Fat: \n\n"+
                 "Sugar: \n\n"+
-                "Weight: ");
+                "Weight: \n\n"+
+                "Proteins: ");
         energy = new TextField();
         energy.setLayoutY(nutritionInfo.getLayoutY()-7);
         energy.setLayoutX(nutritionInfo.getLayoutX()+110);
@@ -772,6 +788,12 @@ public class DishesScreenController implements Initializable {
         weight.setText(selectedDish.getWeight().toString());
         weight.setPrefSize(70,10);
 
+        proteins = new TextField();
+        proteins.setLayoutY(nutritionInfo.getLayoutY()+228);
+        proteins.setLayoutX(nutritionInfo.getLayoutX()+110);
+        proteins.setText(selectedDish.getProteins().toString());
+        proteins.setPrefSize(70,10);
+
         List<Category> categorias = eb.getCategories();
 
         selector = new ChoiceBox();
@@ -789,7 +811,7 @@ public class DishesScreenController implements Initializable {
         selector.setLayoutY(tituloCategorias.getLayoutY()+30);
 
         contentPane.getChildren().add(imageView);
-        rigthPane.getChildren().addAll(tituloDescripcion, selector,weight,sugar, fat, saturated, salt, carbohydrates, tituloCategorias, nutritionInfo, energy, priceValue, contentPane,descriptionEnter,removeButton, cancelButton, saveButton,nameEnter);
+        rigthPane.getChildren().addAll(tituloDescripcion, selector,weight,sugar, fat, saturated,proteins, salt, carbohydrates, tituloCategorias, nutritionInfo, energy, priceValue, contentPane,descriptionEnter,removeButton, cancelButton, saveButton,nameEnter);
         leftPane.setDisable(true);
 
 
@@ -919,6 +941,7 @@ public class DishesScreenController implements Initializable {
         editAllergens = new JFXButton();
         iconsHolder = new AnchorPane();
         categoria = new Label();
+        generateXML = new JFXButton();
 
 
 
@@ -1004,9 +1027,24 @@ public class DishesScreenController implements Initializable {
         addButton.setId("addButton");
 
 
+
+
+
         addButton.setOnMouseClicked(e -> {
             onClickAdd();
 
+        });
+
+        generateXML.setText("GENERATE MENU");
+        generateXML.setLayoutY(2);
+        generateXML.setLayoutX(580);
+        generateXML.setMaxHeight(80);
+        generateXML.setMaxWidth(200);
+        generateXML.setFont(Font.font("DIN Alternate Bold", 20));
+        generateXML.setStyle("-fx-background-color: white;");
+
+        generateXML.setOnAction(e->{
+            eb.getMenu();
         });
 
 
@@ -1029,7 +1067,7 @@ public class DishesScreenController implements Initializable {
 
         List<Dish> platos = eb.getDishes();
         if(platos.size() >= 1 ) {
-            Image imagen = new Image("Resources/DishesImages/" + platos.get(0).getImage());
+            Image imagen = new Image(FTPURL.getImageURL()+"/DishesImages/" + platos.get(0).getImage());
             this.selectedImage = imagen;
             imageView.setImage(imagen);
             description.setText(platos.get(0).getDescription());
@@ -1082,7 +1120,7 @@ public class DishesScreenController implements Initializable {
         leftPane.getChildren().clear();
         leftPane.setStyle("-fx-background-color: black");
 
-        topPane.getChildren().add(addButton);
+        topPane.getChildren().addAll(addButton,generateXML);
 
         if(platos.size()>0) {
             this.createLabels(platos);

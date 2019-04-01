@@ -7,6 +7,7 @@ package signup;
 
 import animatefx.animation.*;
 import com.jfoenix.controls.JFXColorPicker;
+import com.jfoenix.controls.JFXTextField;
 import flow.Transition;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
@@ -54,6 +55,8 @@ public class SignUpPageController implements Initializable {
     private JFXColorPicker colorPicker;
 
     @FXML
+    private JFXColorPicker colorSecundarioPicker;
+    @FXML
     private AnchorPane topPane;
 
     @FXML
@@ -62,6 +65,9 @@ public class SignUpPageController implements Initializable {
     private Label title2;
     @FXML
     private Label w_letter;
+
+    @FXML
+    private JFXTextField restaurantName;
     
     @FXML
     void goLogin(ActionEvent event){
@@ -88,7 +94,9 @@ public class SignUpPageController implements Initializable {
         LoginData regisUser = new LoginData();
         regisUser.setUsername(username.getText());
         regisUser.setPassword(password.getText());
-        regisUser.setColor(Integer.toHexString(colorPicker.getValue().hashCode()));
+        regisUser.setColor("#"+Integer.toHexString(colorPicker.getValue().hashCode()).substring(0, 6));
+        regisUser.setColorSecundario("#"+Integer.toHexString(colorSecundarioPicker.getValue().hashCode()).substring(0, 6));
+        regisUser.setNombre(restaurantName.getText());
         
         LoginBuisness persister = new LoginBuisness();
         code = persister.persistLoginData(regisUser,confpassword.getText());

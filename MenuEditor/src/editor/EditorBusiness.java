@@ -3,8 +3,13 @@ package editor;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import datatype.*;
+import login.LoginBuisness;
+import login.LoginData;
+import utils.XMLParseUtils;
 
 public class EditorBusiness {
 
@@ -83,6 +88,12 @@ public class EditorBusiness {
                 .getSingleResult();
 
         return plato;
+
+    }
+
+    public Dish getDish(int id){
+
+        return em.find(Dish.class,id);
 
     }
 
@@ -175,6 +186,7 @@ public class EditorBusiness {
         uDish.setSalt(dish.getSalt());
         uDish.setSugars(dish.getSugars());
         uDish.setSaturedFat(dish.getSaturedFat());
+        uDish.setProteins(dish.getProteins());
 
         em.getTransaction().begin();
         em.persist(uDish);
@@ -212,8 +224,6 @@ public class EditorBusiness {
 
         return comb.getCategoriesByCategoriesIdcategories().getName();
     }
-
-
     public int addDish(Dish newDish, String categoryName){
 
         em.getTransaction().begin();
@@ -237,5 +247,71 @@ public class EditorBusiness {
 
     }
 
+    public List<Dish> getDishesByCategory(int id){
 
+        List<Dish> dishes = new ArrayList<Dish>();
+
+        List<DiCa> diCa = (List<DiCa>)em.createQuery("SELECT d FROM DiCa d WHERE d.categoriesByCategoriesIdcategories.idcategories=:id")
+                .setParameter("id",id)
+                .getResultList();
+
+        for(DiCa di : diCa){
+
+            dishes.add(di.getDishesByDishesIdDishes());
+
+        }
+
+        return dishes;
+    }
+
+    public void getMenu(){
+
+        List<CombDiCa> comb = new ArrayList<CombDiCa>();
+       List<Category> categorias = this.getCategories();
+
+       for(Category categoria : categorias){
+           CombDiCa element = new CombDiCa();
+           element.setCategory(categoria);
+           element.setDishes(this.getDishesByCategory(categoria.getIdcategories()));
+           comb.add(element);
+       }
+
+       Menu menu = new Menu();
+       List<datatype.Category> listCategories = new ArrayList<>();
+
+
+       if(comb !=null){
+           for (CombDiCa combDica:comb) {
+               List<datatype.Dish> listDish = new ArrayList<>();
+               if(combDica!=null && combDica.getCategoria()!=null && combDica.getDishes()!=null){
+                   for (Dish dish:combDica.getDishes()) {
+                       if(dish!=null){
+                           EnergeticComposition energeticComposition = new EnergeticComposition("g/100g",new Energy("Kcal",dish.getEnergy().floatValue()),dish.getFat().floatValue(),dish.getSaturedFat().floatValue(),dish.getCarboHydrates().floatValue(),dish.getSugars().floatValue(),dish.getProteins().floatValue(),dish.getSalt().floatValue());
+                           List<Allergen> allergenList = new ArrayList<>();
+                           List<Warning> warningList = new ArrayList<>();
+                           if(getAllergensbyDish(dish.getIdDishes())!=null){
+                               for (Allergens allergen:getAllergensbyDish(dish.getIdDishes())){
+                                   if(allergen!=null){
+                                       allergenList.add(new Allergen(allergen.getId()));
+                                   }
+                               }
+                           }
+                           listDish.add(new datatype.Dish(dish,energeticComposition,allergenList,warningList));
+                       }
+                   }
+                   listCategories.add(new datatype.Category(combDica.getCategoria(),listDish));
+               }
+           }
+       }
+
+       LoginBuisness lb = new LoginBuisness();
+       LoginData user = lb.getUserData();
+       menu.setCategories(listCategories);
+       menu.setRestaurantName(user.getNombre());
+       menu.setPrimaryColor(user.getColor());
+       menu.setSecondaryColor(user.getColorSecundario());
+
+        XMLParseUtils.updateMenu(FTPURL.getMenuURL()+"/menu.xml",menu);
+
+       }
 }

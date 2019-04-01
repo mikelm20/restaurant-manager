@@ -1,0 +1,143 @@
+<menu r-name="Andoni&apos;s hot dog" info-1="#288d1ff" info-2="#000000">
+   <category name="Name">
+      <imageURL>null</imageURL>
+      <dish id="7">
+         <imageURL>null</imageURL>
+         <name>NAME</name>
+         <description>WRITE THE DESCRIPTION OF THE NEW DISH</description>
+         <price currency="€">0.0</price>
+         <allergens>7</allergens>
+         <allergens>10</allergens>
+         <allergens>11</allergens>
+         <allergens>12</allergens>
+         <allergens>14</allergens>
+         <composition measure="g/100g">
+            <energy units="Kcal">0.0</energy>
+            <fat>0.0</fat>
+            <saturatedfat>0.0</saturatedfat>
+            <carbohydrates>0.0</carbohydrates>
+            <sugars>0.0</sugars>
+            <protein>7.8</protein>
+            <salt>0.0</salt>
+         </composition>
+         <weight unit="g">0.0</weight>
+      </dish>
+      <dish id="8">
+         <imageURL>null</imageURL>
+         <name>NAME1</name>
+         <description>WRITE THE DESCRIPTION OF THE NEW DISH</description>
+         <price currency="€">0.0</price>
+         <allergens>5</allergens>
+         <allergens>8</allergens>
+         <allergens>9</allergens>
+         <allergens>12</allergens>
+         <composition measure="g/100g">
+            <energy units="Kcal">0.0</energy>
+            <fat>0.0</fat>
+            <saturatedfat>0.0</saturatedfat>
+            <carbohydrates>0.0</carbohydrates>
+            <sugars>0.0</sugars>
+            <protein>7.8</protein>
+            <salt>0.0</salt>
+         </composition>
+         <weight unit="g">0.0</weight>
+      </dish>
+      <dish id="10">
+         <imageURL>null</imageURL>
+         <name>NAME2</name>
+         <description>WRITE TH</description>
+         <price currency="€">0.0</price>
+         <allergens>1</allergens>
+         <allergens>4</allergens>
+         <allergens>7</allergens>
+         <composition measure="g/100g">
+            <energy units="Kcal">0.0</energy>
+            <fat>0.0</fat>
+            <saturatedfat>0.0</saturatedfat>
+            <carbohydrates>0.0</carbohydrates>
+            <sugars>0.0</sugars>
+            <protein>7.8</protein>
+            <salt>0.0</salt>
+         </composition>
+         <weight unit="g">0.0</weight>
+      </dish>
+      <dish id="11">
+         <imageURL>null</imageURL>
+         <name>NAME3</name>
+         <description>WRITE THE DESCRIPTION OF THE NEW DISH</description>
+         <price currency="€">0.0</price>
+         <allergens>5</allergens>
+         <allergens>8</allergens>
+         <composition measure="g/100g">
+            <energy units="Kcal">0.0</energy>
+            <fat>0.0</fat>
+            <saturatedfat>0.0</saturatedfat>
+            <carbohydrates>0.0</carbohydrates>
+            <sugars>0.0</sugars>
+            <protein>7.8</protein>
+            <salt>0.0</salt>
+         </composition>
+         <weight unit="g">0.0</weight>
+      </dish>
+      <dish id="12">
+         <imageURL>null</imageURL>
+         <name>NAME4</name>
+         <description>WRITE THE DESCRIPTION OF THE NEW DISH</description>
+         <price currency="€">0.0</price>
+         <allergens>8</allergens>
+         <allergens>10</allergens>
+         <composition measure="g/100g">
+            <energy units="Kcal">0.0</energy>
+            <fat>0.0</fat>
+            <saturatedfat>0.0</saturatedfat>
+            <carbohydrates>0.0</carbohydrates>
+            <sugars>0.0</sugars>
+            <protein>7.8</protein>
+            <salt>0.0</salt>
+         </composition>
+         <weight unit="g">0.0</weight>
+      </dish>
+   </category>
+   <category name="Name1">
+      <imageURL>null</imageURL>
+      <dish id="13">
+         <imageURL>null</imageURL>
+         <name>NAME5</name>
+         <description>This is a test</description>
+         <price currency="€">12.0</price>
+         <allergens>7</allergens>
+         <allergens>11</allergens>
+         <composition measure="g/100g">
+            <energy units="Kcal">0.0</energy>
+            <fat>1.0</fat>
+            <saturatedfat>23.0</saturatedfat>
+            <carbohydrates>45.0</carbohydrates>
+            <sugars>34.0</sugars>
+            <protein>7.8</protein>
+            <salt>34.0</salt>
+         </composition>
+         <weight unit="g">54.0</weight>
+      </dish>
+   </category>
+   <category name="Name2">
+      <imageURL>null</imageURL>
+      <dish id="14">
+         <imageURL>null</imageURL>
+         <name>NAME6</name>
+         <description>DESCRIPTION </description>
+         <price currency="€">12.0</price>
+         <allergens>8</allergens>
+         <allergens>10</allergens>
+         <composition measure="g/100g">
+            <energy units="Kcal">12.0</energy>
+            <fat>3.0</fat>
+            <saturatedfat>5.0</saturatedfat>
+            <carbohydrates>23.0</carbohydrates>
+            <sugars>4.0</sugars>
+            <protein>7.8</protein>
+            <salt>13.0</salt>
+         </composition>
+         <weight unit="g">0.0</weight>
+      </dish>
+   </category>
+</menu>

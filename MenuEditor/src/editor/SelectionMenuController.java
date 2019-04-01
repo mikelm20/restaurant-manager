@@ -39,6 +39,7 @@ public class SelectionMenuController implements Initializable {
     private Transition transition;
 
 
+
     @Override
     public void initialize(URL url, ResourceBundle rb){
 
@@ -80,6 +81,7 @@ public class SelectionMenuController implements Initializable {
             changeScreen("/editor/DishesScreen.fxml");
 
         });
+
 
         transition = new Transition();
         new SlideInDown(leftPane).play();
