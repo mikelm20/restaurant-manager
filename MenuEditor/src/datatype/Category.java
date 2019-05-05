@@ -34,7 +34,7 @@ public class Category {
     public Category(editor.Category category,List<Dish> dishList){
         if(category !=null){
             this.name = category.getName();
-            this.imageFileDirectory = FTPURL.getImageURL()+"/CategoriesImages/"+category.getImage();
+            this.imageFileDirectory = FTPURL.getFTP()+"/CategoriesImages/"+category.getImage();
             this.dishes = dishList;
         }
     }

@@ -4,14 +4,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 
-<StackPane fx:id="rootPane" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="editor.CategoriesScreenController" stylesheets="@ScrollBar.css">
+<AnchorPane fx:id="rootPane" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="editor.CategoriesScreenController" stylesheets="@ScrollBar.css">
    <children>
-      <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" style="-fx-background-color: #f4c542#f4c542;" StackPane.alignment="BOTTOM_LEFT">
+      <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity"  AnchorPane.topAnchor="40.0" AnchorPane.leftAnchor="0"  style="-fx-background-color: black;">
          <content>
-            <AnchorPane fx:id="leftPane" layoutY="30.0" prefHeight="600.0" prefWidth="250.0" style="-fx-background-color: #f4c542;" />
+            <AnchorPane fx:id="leftPane"  prefWidth="250.0" style="-fx-background-color: black;" />
          </content>
       </ScrollPane>
-      <AnchorPane fx:id="rigthPane" maxWidth="-Infinity" prefWidth="200.0" StackPane.alignment="BOTTOM_RIGHT" />
-      <AnchorPane fx:id="topPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="200.0" prefWidth="200.0" StackPane.alignment="TOP_LEFT" />
+      <AnchorPane fx:id="rigthPane" maxWidth="-Infinity"  AnchorPane.topAnchor="40" AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0"/>
+      <AnchorPane fx:id="topPane" prefHeight="200.0" AnchorPane.rightAnchor="0" AnchorPane.leftAnchor="0"/>
    </children>
-</StackPane>
+</AnchorPane>

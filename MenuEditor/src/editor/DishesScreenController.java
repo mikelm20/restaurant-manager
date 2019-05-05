@@ -12,6 +12,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
@@ -24,6 +28,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
+import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -40,7 +45,7 @@ public class DishesScreenController implements Initializable {
 
     private EditorBusiness eb;
     @FXML
-    private StackPane rootPane;
+    private AnchorPane rootPane;
     @FXML
     private ScrollPane scrollPane;
     @FXML
@@ -112,24 +117,28 @@ public class DishesScreenController implements Initializable {
     }
 
     private String nutritionInfoText(Dish plato) {
-        return "Energy: "+plato.getEnergy().toString()+"\n"+
-                "Carbohydrates: "+plato.getCarboHydrates().toString()+"\n"+
-                "Salt: " + plato.getSalt().toString() + "\n"+
-                "Saturated Fat: " +plato.getSaturedFat().toString()+"\n"+
-                "Proteins: " +plato.getProteins().toString()+"\n"+
-                "Fat: "+plato.getFat().toString()+"\n"+
-                "Sugar: "+plato.getSugars().toString()+"\n"+
+        return "Energy: "+plato.getEnergy().toString()+"\n\n"+
+                "Carbohydrates: "+plato.getCarboHydrates().toString()+"\n\n"+
+                "Salt: " + plato.getSalt().toString() + "\n\n"+
+                "Saturated Fat: " +plato.getSaturedFat().toString()+"\n\n"+
+                "Proteins: " +plato.getProteins().toString()+"\n\n"+
+                "Fat: "+plato.getFat().toString()+"\n\n"+
+                "Sugar: "+plato.getSugars().toString()+"\n\n"+
                 "Weight: "+plato.getWeight().toString();
     }
 
     private void createLabels(List<Dish> platos) {
+
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        double width = screenSize.getWidth();
+        double height = screenSize.getHeight();
         int x = 0, y = 0;
         for (Dish dish : platos) {
             Label di = new Label();
             di.setText(dish.getName());
             di.setFont(Font.font("DIN Alternate Bold", 18));
             di.setAlignment(Pos.CENTER);
-            di.setPrefWidth(900 / 5);
+            di.setPrefWidth(width / 5);
             di.setPrefHeight(60);
             di.setMaxHeight(di.getPrefHeight());
             di.setMaxWidth(di.getPrefWidth());
@@ -153,7 +162,8 @@ public class DishesScreenController implements Initializable {
                 description.setText(plato.getDescription());
                 tituloImagen.setText(name);
                 nutritionInfo.setText(nutritionInfoText(plato));
-                tituloPrecio.setText("PRECIO: "+plato.getPrice() +"€");
+                tituloPrecio.setText("- PRICE: "+plato.getPrice() +"€");
+                categoria.setText(eb.getCategoryByDish(plato.getIdDishes()));
                 rigthPane.getChildren().addAll(tituloPrecio,nutritionInfo, imageView, description, tituloImagen);
                 new Pulse(di).setSpeed(1).play();
                 di.setStyle("-fx-background-color: #ffc040");
@@ -222,6 +232,11 @@ public class DishesScreenController implements Initializable {
     }
 
     private void onClickEditAllergens(){
+
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        double width = screenSize.getWidth();
+        double height = screenSize.getHeight();
+
         rigthPane.getChildren().clear();
         leftPane.setDisable(true);
         topPane.getChildren().removeAll(addButton,generateXML);
@@ -233,10 +248,10 @@ public class DishesScreenController implements Initializable {
 
         alergenos = eb.getAllergens();
         saveButton = new JFXButton();
-        this.setButton(saveButton, 40, 60, (900-900/5)-100, 30, "save","#f4c542","white",16);
+        this.setButton(saveButton, 40, 60, (float)(width-width/5)-100, 30, "save","#f4c542","white",16);
         saveButton.setVisible(true);
         cancelButton = new JFXButton();
-        this.setButton(cancelButton, 40, 80, (900-900/5)-185,30,"cancel","red","white",16);
+        this.setButton(cancelButton, 40, 80, (float)(width-width/5)-185,30,"cancel","red","white",16);
         cancelButton.setVisible(true);
 
         cancelButton.setOnAction((ActionEvent back)->{
@@ -250,7 +265,7 @@ public class DishesScreenController implements Initializable {
         });
 
         rigthPane.getChildren().addAll(saveButton,cancelButton, tituloAlergenos);
-        int y=100;
+        int y=200;
         JFXCheckBox checkBox;
         ImageView imagen;
         allergensCheck = new ArrayList<JFXCheckBox>();
@@ -260,8 +275,8 @@ public class DishesScreenController implements Initializable {
 
             checkBox = new JFXCheckBox();
             imagen = new ImageView(new Image("Resources/AWIcons/" + alergeno.getImage()));
-            imagen.setFitWidth(40);
-            imagen.setFitHeight(60);
+            imagen.setFitWidth(80);
+            imagen.setFitHeight(100);
             checkBox.setId(Integer.toString(alergeno.getId()));
             if(allergensByDish!=null) {
                 if (allergensByDish.contains(alergeno)) {
@@ -271,39 +286,39 @@ public class DishesScreenController implements Initializable {
 
             if (alergeno.getId()<4 ) {
 
-                imagen.setLayoutX(70);
-                checkBox.setLayoutX(50);
-                imagen.setLayoutY(40+(y*alergeno.getId()));
-                checkBox.setLayoutY(50+(y*alergeno.getId()));
+                imagen.setLayoutX(100);
+                checkBox.setLayoutX(80);
+                imagen.setLayoutY((y*alergeno.getId()));
+                checkBox.setLayoutY(10+(y*alergeno.getId()));
 
             }
             else if(alergeno.getId()<7) {
 
-                imagen.setLayoutX(200);
-                checkBox.setLayoutX(180);
-                imagen.setLayoutY(40+(y*(alergeno.getId()-3)));
-                checkBox.setLayoutY(50+(y*(alergeno.getId()-3)));
+                imagen.setLayoutX(280);
+                checkBox.setLayoutX(260);
+                imagen.setLayoutY((y*(alergeno.getId()-3)));
+                checkBox.setLayoutY(10+(y*(alergeno.getId()-3)));
 
             }
             else if(alergeno.getId()<10) {
 
-                imagen.setLayoutX(330);
-                checkBox.setLayoutX(310);
-                imagen.setLayoutY(40+(y*(alergeno.getId()-6)));
-                checkBox.setLayoutY(50+(y*(alergeno.getId()-6)));
+                imagen.setLayoutX(460);
+                checkBox.setLayoutX(440);
+                imagen.setLayoutY((y*(alergeno.getId()-6)));
+                checkBox.setLayoutY(10+(y*(alergeno.getId()-6)));
 
             }
              else if(alergeno.getId()<13){
-                imagen.setLayoutX(460);
-                checkBox.setLayoutX(440);
-                imagen.setLayoutY(40+(y*(alergeno.getId()-9)));
-                checkBox.setLayoutY(50+(y*(alergeno.getId()-9)));
+                imagen.setLayoutX(640);
+                checkBox.setLayoutX(620);
+                imagen.setLayoutY((y*(alergeno.getId()-9)));
+                checkBox.setLayoutY(10+(y*(alergeno.getId()-9)));
             }
              else {
-                imagen.setLayoutX(590);
-                checkBox.setLayoutX(570);
-                imagen.setLayoutY(40+(y*(alergeno.getId()-12)));
-                checkBox.setLayoutY(50+(y*(alergeno.getId()-12)));
+                imagen.setLayoutX(820);
+                checkBox.setLayoutX(800);
+                imagen.setLayoutY((y*(alergeno.getId()-12)));
+                checkBox.setLayoutY(10+(y*(alergeno.getId()-12)));
 
             }
 
@@ -360,6 +375,10 @@ public class DishesScreenController implements Initializable {
 
     public void onClickAdd(){
 
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        double width = screenSize.getWidth();
+        double height = screenSize.getHeight();
+
         rigthPane.getChildren().removeAll(categoria, tituloCategorias, imageView, description, editDish,editAllergens, tituloImagen,iconsHolder,nutritionInfo);
         rigthPane.getChildren().clear();
         topPane.getChildren().removeAll(addButton,generateXML);
@@ -373,8 +392,8 @@ public class DishesScreenController implements Initializable {
         imageView = new ImageView(new Image("/Resources/draganddrop.png"));
         selectedShowDish = selectedDish;
 
-        this.setButton(saveButton, 20, 60, (900-900/5)-100, 20, "save","#f4c542","white",16);
-        this.setButton(cancelButton, 20, 80, (900-900/5)-185,20,"cancel","red","white",16);
+        this.setButton(saveButton, 20, 60, (float)(width-width/5)-100, 20, "save","#f4c542","white",16);
+        this.setButton(cancelButton, 20, 80, (float)(width-width/5)-185,20,"cancel","red","white",16);
         saveButton.setVisible(true);
         cancelButton.setVisible(true);
 
@@ -394,7 +413,7 @@ public class DishesScreenController implements Initializable {
             {
                 newDish.setImage(uploadedImage.getName());
                 Path source = Paths.get(uploadedImage.getAbsolutePath());
-                Path dest = Paths.get(FTPURL.getImageURL()+"/DishesImages/"+uploadedImage.getName());
+                Path dest = Paths.get(FTPURL.getImgDest()+"/DishesImages/"+uploadedImage.getName());
                 try {
                     Files.copy(source, dest, StandardCopyOption.REPLACE_EXISTING);
                 } catch (Exception e) {
@@ -426,9 +445,9 @@ public class DishesScreenController implements Initializable {
 
         });
 
-        tituloPrecio.setText("PRECIO: ");
-        priceValue.setLayoutY(tituloPrecio.getLayoutY());
-        priceValue.setLayoutX(tituloPrecio.getLayoutX()+75);
+        tituloPrecio.setText("- PRICE: ");
+        priceValue.setLayoutY(tituloPrecio.getLayoutY()+5);
+        priceValue.setLayoutX(tituloPrecio.getLayoutX()+150);
         priceValue.setPrefSize(60,10);
         priceValue.setMaxSize(60,10);
         priceValue.setPromptText(Double.toString(0)+"€");
@@ -438,11 +457,11 @@ public class DishesScreenController implements Initializable {
         nameEnter.setLayoutY(30);
         nameEnter.setPromptText("NAME");
 
-        tituloDescripcion.setLayoutX(360);
-        tituloDescripcion.setLayoutY(400);
+       // tituloDescripcion.setLayoutX(360);
+        //tituloDescripcion.setLayoutY(400);
 
-        descriptionEnter.setLayoutX(360);
-        descriptionEnter.setLayoutY(440);
+        descriptionEnter.setLayoutX(600);
+        descriptionEnter.setLayoutY(650);
         descriptionEnter.setMaxHeight(100);
         descriptionEnter.setMaxWidth(350);
         descriptionEnter.setWrapText(true);
@@ -456,8 +475,8 @@ public class DishesScreenController implements Initializable {
         contentPane.setMaxHeight(contentPane.getPrefHeight());
         contentPane.setStyle("-fx-border-color: black");
 
-        imageView.setFitHeight(200);
-        imageView.setFitWidth(300);
+        imageView.setFitHeight(400);
+        imageView.setFitWidth(500);
 
         contentPane.setOnDragOver(new EventHandler<DragEvent>() {
             @Override
@@ -481,9 +500,9 @@ public class DishesScreenController implements Initializable {
         });
 
 
-        tituloNutricion.setLayoutX(410);
-        nutritionInfo.setLayoutX(410);
-        nutritionInfo.setLayoutY(130);
+        //tituloNutricion.setLayoutX(360);
+       // nutritionInfo.setLayoutX(410);
+        //nutritionInfo.setLayoutY(130);
         nutritionInfo.setText("Energy: \n\n"+
                 "Carbohydrates: \n\n"+
                 "Salt: \n\n"+
@@ -492,56 +511,56 @@ public class DishesScreenController implements Initializable {
                 "Sugar: \n\n"+
                 "Weight: \n\n"+
                 "Proteins: ");
+
         energy = new TextField();
-        energy.setLayoutY(nutritionInfo.getLayoutY()-7);
-        energy.setLayoutX(nutritionInfo.getLayoutX()+160);
+        energy.setLayoutY(nutritionInfo.getLayoutY());
+        energy.setLayoutX(nutritionInfo.getLayoutX()+200);
         energy.setPromptText("0.0");
         energy.setPrefSize(70,10);
 
         carbohydrates = new TextField();
-        carbohydrates.setLayoutY(nutritionInfo.getLayoutY()+30);
-        carbohydrates.setLayoutX(nutritionInfo.getLayoutX()+160);
+        carbohydrates.setLayoutY(nutritionInfo.getLayoutY()+53);
+        carbohydrates.setLayoutX(nutritionInfo.getLayoutX()+200);
         carbohydrates.setPromptText("0.0");
         carbohydrates.setPrefSize(70,10);
 
         salt = new TextField();
-        salt.setLayoutY(nutritionInfo.getLayoutY()+63);
-        salt.setLayoutX(nutritionInfo.getLayoutX()+160);
+        salt.setLayoutY(nutritionInfo.getLayoutY()+103);
+        salt.setLayoutX(nutritionInfo.getLayoutX()+200);
         salt.setPromptText("0.0");
         salt.setPrefSize(70,10);
 
         saturated = new TextField();
-        saturated.setLayoutY(nutritionInfo.getLayoutY()+96);
-        saturated.setLayoutX(nutritionInfo.getLayoutX()+160);
+        saturated.setLayoutY(nutritionInfo.getLayoutY()+153);
+        saturated.setLayoutX(nutritionInfo.getLayoutX()+200);
         saturated.setPromptText("0.0");
         saturated.setPrefSize(70,10);
 
-
-
         fat = new TextField();
-        fat.setLayoutY(nutritionInfo.getLayoutY()+132);
-        fat.setLayoutX(nutritionInfo.getLayoutX()+160);
+        fat.setLayoutY(nutritionInfo.getLayoutY()+206);
+        fat.setLayoutX(nutritionInfo.getLayoutX()+200);
         fat.setPromptText("0.0");
         fat.setPrefSize(70,10);
 
         sugar = new TextField();
-        sugar.setLayoutY(nutritionInfo.getLayoutY()+165);
-        sugar.setLayoutX(nutritionInfo.getLayoutX()+160);
+        sugar.setLayoutY(nutritionInfo.getLayoutY()+260);
+        sugar.setLayoutX(nutritionInfo.getLayoutX()+200);
         sugar.setPromptText("0.0");
         sugar.setPrefSize(70,10);
 
         weight = new TextField();
-        weight.setLayoutY(nutritionInfo.getLayoutY()+197);
-        weight.setLayoutX(nutritionInfo.getLayoutX()+160);
+        weight.setLayoutY(nutritionInfo.getLayoutY()+310);
+        weight.setLayoutX(nutritionInfo.getLayoutX()+200);
         weight.setPromptText("0.0");
         weight.setPrefSize(70,10);
 
-
         proteins = new TextField();
-        proteins.setLayoutY(nutritionInfo.getLayoutY()+228);
-        proteins.setLayoutX(nutritionInfo.getLayoutX()+160);
+        proteins.setLayoutY(nutritionInfo.getLayoutY()+360);
+        proteins.setLayoutX(nutritionInfo.getLayoutX()+200);
         proteins.setPromptText("0.0");
         proteins.setPrefSize(70,10);
+
+
 
         List<Category> categorias = eb.getCategories();
 
@@ -553,8 +572,8 @@ public class DishesScreenController implements Initializable {
         }
 
         selector.setValue(selector.getItems().get(0));
-        selector.setLayoutX(tituloCategorias.getLayoutX());
-        selector.setLayoutY(tituloCategorias.getLayoutY()+30);
+        selector.setLayoutX(tituloCategorias.getLayoutX()+230);
+        selector.setLayoutY(tituloCategorias.getLayoutY()+3);
 
         contentPane.getChildren().add(imageView);
         rigthPane.getChildren().addAll(selector,weight,sugar, fat,proteins, saturated, salt, carbohydrates, nutritionInfo, energy, priceValue, contentPane,descriptionEnter, cancelButton, saveButton,nameEnter);
@@ -582,16 +601,20 @@ public class DishesScreenController implements Initializable {
         tituloAlergenos = new Label();
         selectedShowDish = selectedDish;
 
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        double width = screenSize.getWidth();
+        double height = screenSize.getHeight();
 
 
-        tituloAlergenos.setLayoutX(360);
+
+        /*tituloAlergenos.setLayoutX(360);
         tituloAlergenos.setLayoutY(400);
         tituloAlergenos.setText("ALLERGENS & WARNINGS:");
-        tituloAlergenos.setFont(Font.font("DIN Alternate Bold", 20));
+        tituloAlergenos.setFont(Font.font("DIN Alternate Bold", 20));*/
 
-        this.setButton(saveButton, 20, 60, (900-900/5)-100, 20, "save","#f4c542","white",16);
-        this.setButton(removeButton, 20, 80, (900-900/5)-270, 20, "remove","red","white",16);
-        this.setButton(cancelButton, 20, 80, (900-900/5)-185,20,"cancel","#f4c542","white",16);
+        this.setButton(saveButton, 20, 60, (float)(width-width/5)-100, 20, "save","#f4c542","white",16);
+        this.setButton(removeButton, 20, 80, (float)(width-width/5)-270, 20, "remove","red","white",16);
+        this.setButton(cancelButton, 20, 80, (float)(width-width/5)-185,20,"cancel","#f4c542","white",16);
         saveButton.setVisible(true);
         removeButton.setVisible(true);
         cancelButton.setVisible(true);
@@ -684,10 +707,10 @@ public class DishesScreenController implements Initializable {
         });
 
 
-        tituloPrecio.setLayoutX(tituloPrecio.getLayoutX()-40);
-        tituloPrecio.setText("PRECIO: ");
-        priceValue.setLayoutY(tituloPrecio.getLayoutY());
-        priceValue.setLayoutX(tituloPrecio.getLayoutX()+75);
+        //tituloPrecio.setLayoutX(tituloPrecio.getLayoutX()-40);
+        tituloPrecio.setText("- PRICE: ");
+        priceValue.setLayoutY(tituloPrecio.getLayoutY()+5);
+        priceValue.setLayoutX(tituloPrecio.getLayoutX()+150);
         priceValue.setPrefSize(60,10);
         priceValue.setMaxSize(60,10);
         priceValue.setText(Double.toString(selectedDish.getPrice()));
@@ -697,11 +720,11 @@ public class DishesScreenController implements Initializable {
         nameEnter.setLayoutY(30);
         nameEnter.setText(selectedDish.getName());
 
-        tituloDescripcion.setLayoutX(360);
-        tituloDescripcion.setLayoutY(400);
+        /*tituloDescripcion.setLayoutX(360);
+        tituloDescripcion.setLayoutY(400);*/
 
-        descriptionEnter.setLayoutX(360);
-        descriptionEnter.setLayoutY(430);
+        descriptionEnter.setLayoutX(600);
+        descriptionEnter.setLayoutY(630);
         descriptionEnter.setMaxHeight(100);
         descriptionEnter.setMaxWidth(350);
         descriptionEnter.setWrapText(true);
@@ -736,8 +759,8 @@ public class DishesScreenController implements Initializable {
         });
 
 
-        tituloNutricion.setLayoutX(360);
-        nutritionInfo.setLayoutX(360);
+        //tituloNutricion.setLayoutX(360);
+       // nutritionInfo.setLayoutX(360);
         nutritionInfo.setText("Energy: \n\n"+
                 "Carbohydrates: \n\n"+
                 "Salt: \n\n"+
@@ -747,50 +770,50 @@ public class DishesScreenController implements Initializable {
                 "Weight: \n\n"+
                 "Proteins: ");
         energy = new TextField();
-        energy.setLayoutY(nutritionInfo.getLayoutY()-7);
-        energy.setLayoutX(nutritionInfo.getLayoutX()+110);
+        energy.setLayoutY(nutritionInfo.getLayoutY());
+        energy.setLayoutX(nutritionInfo.getLayoutX()+200);
         energy.setText(selectedDish.getEnergy().toString());
         energy.setPrefSize(70,10);
 
         carbohydrates = new TextField();
-        carbohydrates.setLayoutY(nutritionInfo.getLayoutY()+30);
-        carbohydrates.setLayoutX(nutritionInfo.getLayoutX()+110);
+        carbohydrates.setLayoutY(nutritionInfo.getLayoutY()+53);
+        carbohydrates.setLayoutX(nutritionInfo.getLayoutX()+200);
         carbohydrates.setText(selectedDish.getCarboHydrates().toString());
         carbohydrates.setPrefSize(70,10);
 
         salt = new TextField();
-       salt.setLayoutY(nutritionInfo.getLayoutY()+63);
-        salt.setLayoutX(nutritionInfo.getLayoutX()+110);
+       salt.setLayoutY(nutritionInfo.getLayoutY()+103);
+        salt.setLayoutX(nutritionInfo.getLayoutX()+200);
         salt.setText(selectedDish.getSalt().toString());
         salt.setPrefSize(70,10);
 
         saturated = new TextField();
-        saturated.setLayoutY(nutritionInfo.getLayoutY()+96);
-        saturated.setLayoutX(nutritionInfo.getLayoutX()+110);
+        saturated.setLayoutY(nutritionInfo.getLayoutY()+153);
+        saturated.setLayoutX(nutritionInfo.getLayoutX()+200);
         saturated.setText(selectedDish.getSaturedFat().toString());
         saturated.setPrefSize(70,10);
 
         fat = new TextField();
-        fat.setLayoutY(nutritionInfo.getLayoutY()+132);
-        fat.setLayoutX(nutritionInfo.getLayoutX()+110);
+        fat.setLayoutY(nutritionInfo.getLayoutY()+206);
+        fat.setLayoutX(nutritionInfo.getLayoutX()+200);
         fat.setText(selectedDish.getFat().toString());
         fat.setPrefSize(70,10);
 
         sugar = new TextField();
-        sugar.setLayoutY(nutritionInfo.getLayoutY()+165);
-        sugar.setLayoutX(nutritionInfo.getLayoutX()+110);
+        sugar.setLayoutY(nutritionInfo.getLayoutY()+260);
+        sugar.setLayoutX(nutritionInfo.getLayoutX()+200);
         sugar.setText(selectedDish.getSugars().toString());
         sugar.setPrefSize(70,10);
 
         weight = new TextField();
-        weight.setLayoutY(nutritionInfo.getLayoutY()+197);
-        weight.setLayoutX(nutritionInfo.getLayoutX()+110);
+        weight.setLayoutY(nutritionInfo.getLayoutY()+310);
+        weight.setLayoutX(nutritionInfo.getLayoutX()+200);
         weight.setText(selectedDish.getWeight().toString());
         weight.setPrefSize(70,10);
 
         proteins = new TextField();
-        proteins.setLayoutY(nutritionInfo.getLayoutY()+228);
-        proteins.setLayoutX(nutritionInfo.getLayoutX()+110);
+        proteins.setLayoutY(nutritionInfo.getLayoutY()+360);
+        proteins.setLayoutX(nutritionInfo.getLayoutX()+200);
         proteins.setText(selectedDish.getProteins().toString());
         proteins.setPrefSize(70,10);
 
@@ -807,8 +830,8 @@ public class DishesScreenController implements Initializable {
         }
 
 
-        selector.setLayoutX(tituloCategorias.getLayoutX());
-        selector.setLayoutY(tituloCategorias.getLayoutY()+30);
+        selector.setLayoutX(tituloCategorias.getLayoutX()+230);
+        selector.setLayoutY(tituloCategorias.getLayoutY()+3);
 
         contentPane.getChildren().add(imageView);
         rigthPane.getChildren().addAll(tituloDescripcion, selector,weight,sugar, fat, saturated,proteins, salt, carbohydrates, tituloCategorias, nutritionInfo, energy, priceValue, contentPane,descriptionEnter,removeButton, cancelButton, saveButton,nameEnter);
@@ -944,90 +967,88 @@ public class DishesScreenController implements Initializable {
         generateXML = new JFXButton();
 
 
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        double width = screenSize.getWidth();
+        double height = screenSize.getHeight();
 
-        rootPane.setPrefWidth(900);
-        rootPane.setPrefHeight(600);
-
-        scrollPane.setPrefWidth(900 / 5);
+        scrollPane.setPrefWidth(width / 5);
         scrollPane.setMaxWidth(scrollPane.getPrefWidth());
-        scrollPane.setPrefHeight(560);
+        scrollPane.setPrefHeight(height-40);
         scrollPane.setMaxHeight(scrollPane.getPrefHeight());
-        scrollPane.setLayoutY(40);
-        scrollPane.setLayoutX(0);
+
         scrollPane.setStyle("-fx-background-color: black");
 
 
-        rigthPane.setPrefWidth(900 - 900 / 5);
-        rigthPane.setPrefHeight(560);
+        AnchorPane.setLeftAnchor( rigthPane,width / 5);
+        rigthPane.setPrefWidth(width - width / 5);
+        rigthPane.setPrefHeight(height-40);
         rigthPane.setMaxHeight(rigthPane.getPrefHeight());
-        rigthPane.setLayoutX(900 / 5);
-        rigthPane.setLayoutY(40);
+        rigthPane.setLayoutX(width / 5);
 
-        topPane.setPrefWidth(900);
+
         topPane.setPrefHeight(40);
         topPane.setMaxHeight(topPane.getPrefHeight());
-        topPane.setLayoutX(0);
-        topPane.setLayoutY(0);
         topPane.setStyle("-fx-background-color: black");
+
 
         imageView.setLayoutX(50);
         imageView.setLayoutY(80);
-        imageView.setFitWidth(200);
-        imageView.setFitHeight(200);
+        imageView.setFitWidth(500);
+        imageView.setFitHeight(400);
         tituloImagen.setLayoutX(50);
         tituloImagen.setLayoutY(30);
         tituloImagen.setFont(Font.font("DIN Alternate Bold", 30));
 
-        tituloDescripcion.setLayoutX(380);
-        tituloDescripcion.setLayoutY(300);
-        tituloDescripcion.setText("DESCRIPTION:");
-        tituloDescripcion.setFont(Font.font("DIN Alternate Bold", 20));
+        tituloDescripcion.setLayoutX(600);
+        tituloDescripcion.setLayoutY(580);
+        tituloDescripcion.setText("- DESCRIPTION:");
+        tituloDescripcion.setFont(Font.font("DIN Alternate Bold", 30));
 
-        tituloCategorias.setLayoutX(30);
-        tituloCategorias.setLayoutY(300);
-        tituloCategorias.setText("CATEGORIA:");
-        tituloCategorias.setFont(Font.font("DIN Alternate Bold", 20));
-
-
-
-        tituloNutricion.setLayoutX(380);
-        tituloNutricion.setLayoutY(90);
-        tituloNutricion.setText("INFORMACIÓN NUTRICIONAL:");
-        tituloNutricion.setFont(Font.font("DIN Alternate Bold", 20));
+        tituloCategorias.setLayoutX(80);
+        tituloCategorias.setLayoutY(500);
+        tituloCategorias.setText("- CATEGORY:");
+        tituloCategorias.setFont(Font.font("DIN Alternate Bold", 30));
 
 
 
-        tituloPrecio.setLayoutX(220);
-        tituloPrecio.setLayoutY(300);
-        tituloPrecio.setFont(Font.font("DIN Alternate Bold", 20));
+        tituloNutricion.setLayoutX(600);
+        tituloNutricion.setLayoutY(100);
+        tituloNutricion.setText("- NUTRITION FACTS:");
+        tituloNutricion.setFont(Font.font("DIN Alternate Bold", 30));
 
 
-       description.setLayoutX(380);
-        description.setLayoutY(342);
+
+        tituloPrecio.setLayoutX(80);
+        tituloPrecio.setLayoutY(560);
+        tituloPrecio.setFont(Font.font("DIN Alternate Bold", 30));
+
+
+       description.setLayoutX(620);
+        description.setLayoutY(650);
+        description.setFont(Font.font(16));
 
         description.setWrappingWidth(300);
         description.maxHeight(100);
         description.maxWidth(300);
 
 
-        nutritionInfo.setLayoutX(380);
-        nutritionInfo.setLayoutY(130);
 
-        categoria.setLayoutX(140);
-        categoria.setLayoutY(300);
-        categoria.setFont(Font.font("DIN Alternate Bold", 20));
+        nutritionInfo.setLayoutX(620);
+        nutritionInfo.setLayoutY(160);
+        nutritionInfo.setFont(Font.font(20));
+
+        categoria.setLayoutX(tituloCategorias.getLayoutX()+230);
+        categoria.setLayoutY(tituloCategorias.getLayoutY()+3);
+        categoria.setFont(Font.font("DIN Alternate Bold", 25));
 
 
-        addButton.setLayoutX(850);
-        addButton.setLayoutY(7);
+        AnchorPane.setRightAnchor(addButton,50.0);
+        AnchorPane.setTopAnchor(addButton,7.0);
         addButton.setPrefWidth(30);
         addButton.setPrefHeight(30);
         addButton.maxHeight(30);
         addButton.maxWidth(30);
         addButton.setId("addButton");
-
-
-
 
 
         addButton.setOnMouseClicked(e -> {
@@ -1036,11 +1057,10 @@ public class DishesScreenController implements Initializable {
         });
 
         generateXML.setText("GENERATE MENU");
-        generateXML.setLayoutY(2);
-        generateXML.setLayoutX(580);
-        generateXML.setMaxHeight(80);
-        generateXML.setMaxWidth(200);
-        generateXML.setFont(Font.font("DIN Alternate Bold", 20));
+        AnchorPane.setTopAnchor(generateXML,5.0);
+        AnchorPane.setRightAnchor(generateXML,200.0);
+
+        generateXML.setFont(Font.font("DIN Alternate Bold", 15));
         generateXML.setStyle("-fx-background-color: white;");
 
         generateXML.setOnAction(e->{
@@ -1049,14 +1069,14 @@ public class DishesScreenController implements Initializable {
 
 
 
-        this.setButton(editDish, 20, 60, (900 - 900 / 5) - 100, 20, "edit", "#f4c542", "white", 16);
+        this.setButton(editDish, 20, 60, (float)(width - width / 5) - 130, 20, "edit", "#f4c542", "white", 16);
         editDish.setVisible(true);
         editDish.setOnAction((ActionEvent event)->{
             this.onClickEdit(event);
         });
 
 
-        this.setButton(editAllergens, 10, 300, 15, 390, "WARNING & ALLERGENS (click to edit):", "green", "white", 16);
+        this.setButton(editAllergens, 10, 300, 80, 630, "WARNING & ALLERGENS (click to edit):", "green", "white", 16);
         editAllergens.setVisible(true);
         editAllergens.setTextAlignment(TextAlignment.LEFT);
 
@@ -1073,13 +1093,13 @@ public class DishesScreenController implements Initializable {
             description.setText(platos.get(0).getDescription());
             tituloImagen.setText(platos.get(0).getName());
             nutritionInfo.setText(nutritionInfoText(platos.get(0)));
-            tituloPrecio.setText("PRECIO: " + platos.get(0).getPrice() + "€");
+            tituloPrecio.setText("- PRICE: " + platos.get(0).getPrice() + "€");
             categoria.setText(eb.getCategoryByDish(platos.get(0).getIdDishes()));
             selectedDish=platos.get(0);
             allergensByDish = eb.getAllergensbyDish(platos.get(0).getIdDishes());
             int numImage = 1;
-            iconsHolder.setLayoutX(15);
-            iconsHolder.setLayoutY(400);
+            iconsHolder.setLayoutX(80);
+            iconsHolder.setLayoutY(650);
             iconsHolder.getChildren().add(editAllergens);
             iconsHolder.setOnMouseClicked(e->{
                 this.onClickEditAllergens();
@@ -1108,14 +1128,14 @@ public class DishesScreenController implements Initializable {
             }
         }
 
-        if ((platos.size()) * 60 > 560) {
+        if ((platos.size()) * 60 > height-40) {
             leftPane.setPrefHeight((platos.size()) * 60);
         } else {
-            leftPane.setPrefHeight(560);
+            leftPane.setPrefHeight(height-40);
             scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         }
 
-        leftPane.setPrefWidth(900 / 5);
+        leftPane.setPrefWidth(width / 5);
         leftPane.setDisable(false);
         leftPane.getChildren().clear();
         leftPane.setStyle("-fx-background-color: black");

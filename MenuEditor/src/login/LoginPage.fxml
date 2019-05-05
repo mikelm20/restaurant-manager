@@ -10,34 +10,36 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="rootPane" depthTest="DISABLE" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #13355d;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="login.LoginPageController">
+<AnchorPane fx:id="rootPane" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="login.LoginPageController">
    <children>
-      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #ffffff;">
+      <AnchorPane AnchorPane.topAnchor="50" fx:id="topPane" depthTest="DISABLE"  prefHeight="80.0" style="-fx-background-color: black;">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </AnchorPane>
+
+
+      <AnchorPane AnchorPane.leftAnchor="200" AnchorPane.rightAnchor="200" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="600"  style="-fx-background-color: #ffffff">
          <children>
-            <AnchorPane fx:id="topPane" depthTest="DISABLE" layoutX="0" layoutY="0" maxHeight="100" maxWidth="900" minHeight="100" minWidth="900" prefHeight="100.0" prefWidth="900.0" style="-fx-background-color: black;">
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets></AnchorPane>
-            <JFXTextField fx:id="usernameText" focusColor="#4d6be1" layoutX="314.0" layoutY="242.0" onMouseClicked="#clearLabel" prefHeight="85.0" prefWidth="303.0" promptText="Username" unFocusColor="#bbbbb4">
+
+            <JFXTextField fx:id="usernameText" focusColor="#4d6be1" AnchorPane.leftAnchor="200" AnchorPane.rightAnchor="200" layoutY="442.0" onMouseClicked="#clearLabel" prefHeight="85.0" prefWidth="303.0" promptText="Username" unFocusColor="#bbbbb4">
                <font>
                   <Font size="18.0" />
                </font>
             </JFXTextField>
-
-                                    <JFXPasswordField fx:id="passwordText" focusColor="#4d6be1" layoutX="311.0" layoutY="331.0" onMouseClicked="#clearLabel" prefHeight="72.0" prefWidth="306.0" promptText="Password" unFocusColor="#bbbbb4">
+            <JFXPasswordField fx:id="passwordText" focusColor="#4d6be1" AnchorPane.leftAnchor="200" AnchorPane.rightAnchor="200" layoutY="531.0" onMouseClicked="#clearLabel" prefHeight="72.0" prefWidth="306.0" promptText="Password" unFocusColor="#bbbbb4">
                <font>
                   <Font size="18.0" />
                </font>
             </JFXPasswordField>
-
-                                    <JFXButton fx:id="loginButton" buttonType="RAISED" defaultButton="true" layoutX="535.0" layoutY="441.0" onAction="#handleButtonAction" prefHeight="38.0" prefWidth="94.0" ripplerFill="#fff3ca" style="-fx-background-color: #f4c542#f4c542 #f4c542#f4c542;" text="GO">
+            <JFXButton fx:id="loginButton" buttonType="RAISED" defaultButton="true" AnchorPane.rightAnchor="200" layoutY="641.0" onAction="#handleButtonAction" prefHeight="38.0" prefWidth="94.0" ripplerFill="#fff3ca" style="-fx-background-color: #f4c542;" text="GO">
                <font>
                   <Font size="21.0" />
                </font>
             </JFXButton>
-            <Label fx:id="errorLabel" alignment="CENTER" layoutX="264.0" layoutY="412.0" prefHeight="19.0" prefWidth="414.0" textAlignment="CENTER" />
-            <JFXSpinner fx:id="spinner" layoutX="377.0" layoutY="266.0" prefHeight="126.0" prefWidth="142.0" />
+            <Label fx:id="errorLabel" alignment="CENTER" layoutX="264.0" layoutY="412.0" prefHeight="19.0" prefWidth="614.0" textAlignment="CENTER" />
+            <JFXSpinner fx:id="spinner" AnchorPane.leftAnchor="200" AnchorPane.rightAnchor="200" AnchorPane.bottomAnchor="200" AnchorPane.topAnchor="400" prefHeight="126.0" prefWidth="142.0" />
          </children>
       </AnchorPane>
    </children>
-</StackPane>
+</AnchorPane>

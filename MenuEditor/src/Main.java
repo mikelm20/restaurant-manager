@@ -21,6 +21,8 @@ public class Main extends Application {
         stage.setScene(scene);
         stage.initStyle(StageStyle.UTILITY);
         stage.setResizable(false);
+       // stage.setFullScreen(true);
+        // stage.setFullScreenExitHint("");
         stage.show();
 
 

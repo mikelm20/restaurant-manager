@@ -55,7 +55,7 @@ public class Dish {
             this.name=dish.getName();
             this.description=dish.getDescription();
             //TODO: Add image file root
-            this.imageFileDirectory = FTPURL.getImageURL()+"/DishesImages/" +dish.getImage();
+            this.imageFileDirectory = FTPURL.getFTP()+"/DishesImages/" +dish.getImage();
             this.price=new Price("€",Double.valueOf(dish.getPrice()).floatValue());
             this.weight=new Weight("g",dish.getWeight().floatValue());
             this.energeticComposition = energeticComposition;

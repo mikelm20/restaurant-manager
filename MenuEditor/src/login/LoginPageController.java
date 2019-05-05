@@ -8,6 +8,7 @@ package login;
 import com.jfoenix.controls.JFXSpinner;
 import flow.Transition;
 
+import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -19,6 +20,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -36,7 +38,7 @@ public class LoginPageController implements Initializable{
     private JFXPasswordField passwordText;
 
     @FXML
-    private StackPane rootPane;
+    private AnchorPane rootPane;
 
     @FXML
     private JFXTextField usernameText;
@@ -127,14 +129,25 @@ public class LoginPageController implements Initializable{
             } else if (valid) {
                 transition = new Transition();
                 transition.changeScene(rootPane, 600, "/editor/SelectionMenu.fxml");
+
             }
         }
+
+
 
     }
 
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
+
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        double width = screenSize.getWidth();
+        double height = screenSize.getHeight();
+
+        rootPane.setPrefWidth(width);
+        rootPane.setPrefHeight(height);
 
         ImageView logo = new ImageView(new Image("/Resources/welcome.png"));
         logo.maxHeight(60);

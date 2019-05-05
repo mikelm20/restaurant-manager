@@ -11,6 +11,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
@@ -22,6 +26,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
+import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -38,7 +43,7 @@ public class CategoriesScreenController implements Initializable {
 
     private EditorBusiness eb;
     @FXML
-    private StackPane rootPane;
+    private AnchorPane rootPane;
     @FXML
     private ScrollPane scrollPane;
     @FXML
@@ -130,13 +135,18 @@ public class CategoriesScreenController implements Initializable {
    }
 
    private void createLabels(List<Category> categorias) {
+
+
+       Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+       double width = screenSize.getWidth();
+       double height = screenSize.getHeight();
        int x = 0, y = 0;
        for (Category category : categorias) {
            Label ca = new Label();
            ca.setText(category.getName());
            ca.setFont(Font.font("DIN Alternate Bold", 18));
            ca.setAlignment(Pos.CENTER);
-           ca.setPrefWidth(900 / 5);
+           ca.setPrefWidth(width / 5);
            ca.setPrefHeight(60);
            ca.setMaxHeight(ca.getPrefHeight());
            ca.setMaxWidth(ca.getPrefWidth());
@@ -176,6 +186,11 @@ public class CategoriesScreenController implements Initializable {
    }
 
    public void onClickEdit(ActionEvent editEvent) {
+
+       Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+       double width = screenSize.getWidth();
+       double height = screenSize.getHeight();
+
        rigthPane.getChildren().removeAll(imageView, description, edit, tituloImagen);
        topPane.getChildren().removeAll(addButton,generateXML);
        saveButton = new JFXButton();
@@ -185,9 +200,9 @@ public class CategoriesScreenController implements Initializable {
        descriptionEnter = new TextArea();
        contentPane = new StackPane();
 
-       this.setButton(saveButton, 40, 60, (900-900/5)-100, 50, "save","#f4c542","white",16);
-       this.setButton(removeButton, 40, 80, (900-900/5)-270, 50, "remove","red","white",16);
-       this.setButton(cancelButton, 40, 80, (900-900/5)-185,50,"cancel","#f4c542","white",16);
+       this.setButton(saveButton, 40, 60, (float)(width-width/5)-100, 50, "save","#f4c542","white",16);
+       this.setButton(removeButton, 40, 80, (float)(width-width/5)-270, 50, "remove","red","white",16);
+       this.setButton(cancelButton, 40, 80, (float)(width-width/5)-185,50,"cancel","#f4c542","white",16);
        saveButton.setVisible(true);
        removeButton.setVisible(true);
        cancelButton.setVisible(true);
@@ -220,6 +235,8 @@ public class CategoriesScreenController implements Initializable {
        contentPane.setMaxWidth(contentPane.getPrefWidth());
        contentPane.setMaxHeight(contentPane.getPrefHeight());
 
+
+
        contentPane.setOnDragOver(new EventHandler<DragEvent>() {
            @Override
            public void handle(final DragEvent event) {
@@ -240,6 +257,12 @@ public class CategoriesScreenController implements Initializable {
                contentPane.setStyle("-fx-border-color: #C6C6C6;");
            }
        });
+
+       tituloDescripcion.setLayoutY(520);
+
+       descriptionEnter.setLayoutX(50);
+       descriptionEnter.setLayoutY(590);
+       descriptionEnter.setPrefHeight(200);
 
        contentPane.getChildren().add(imageView);
        rigthPane.getChildren().addAll(contentPane,descriptionEnter,removeButton, cancelButton, saveButton,nameEnter);
@@ -319,55 +342,66 @@ public class CategoriesScreenController implements Initializable {
         generateXML = new JFXButton();
 
 
-        rootPane.setPrefWidth(900);
-        rootPane.setPrefHeight(600);
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        double width = screenSize.getWidth();
+        double height = screenSize.getHeight();
 
-        scrollPane.setPrefWidth(900 / 5);
+        scrollPane.setPrefWidth(width / 5);
         scrollPane.setMaxWidth(scrollPane.getPrefWidth());
-        scrollPane.setPrefHeight(560);
+        scrollPane.setPrefHeight(height-40);
         scrollPane.setMaxHeight(scrollPane.getPrefHeight());
-        scrollPane.setLayoutY(40);
-        scrollPane.setLayoutX(0);
+
         scrollPane.setStyle("-fx-background-color: black");
 
 
-        rigthPane.setPrefWidth(900 - 900 / 5);
-        rigthPane.setPrefHeight(560);
+        AnchorPane.setLeftAnchor( rigthPane,width / 5);
+        rigthPane.setPrefWidth(width - width / 5);
+        rigthPane.setPrefHeight(height-40);
         rigthPane.setMaxHeight(rigthPane.getPrefHeight());
-        rigthPane.setLayoutX(900 / 5);
-        rigthPane.setLayoutY(40);
+        rigthPane.setLayoutX(width / 5);
 
-        topPane.setPrefWidth(900);
+
         topPane.setPrefHeight(40);
         topPane.setMaxHeight(topPane.getPrefHeight());
-        topPane.setLayoutX(0);
-        topPane.setLayoutY(0);
         topPane.setStyle("-fx-background-color: black");
 
-        imageView.setLayoutX(50);
-        imageView.setLayoutY(80);
-        imageView.setFitWidth(200);
-        imageView.setFitHeight(200);
+        AnchorPane.setLeftAnchor(imageView,50.0);
+        AnchorPane.setTopAnchor(imageView,150.0);
+        /*remove only for testing
+        Image imagen = new Image("/Resources/CategoriesImages/first-course.png");
+        imageView.setFitWidth(imagen.getWidth());
+        imageView.setFitHeight(imagen.getHeight());
+
+
+        imageView.setImage(imagen);*/
+
+        imageView.setFitWidth(500);
+        imageView.setFitHeight(400);
+        tituloDescripcion.setLayoutY(imageView.getFitHeight()+200);
+        AnchorPane.setTopAnchor(description,tituloDescripcion.getLayoutY()+ 105);
+
         tituloImagen.setLayoutX(50);
-        tituloImagen.setLayoutY(30);
-        tituloImagen.setFont(Font.font("DIN Alternate Bold", 30));
+        tituloImagen.setLayoutY(60);
+        tituloImagen.setFont(Font.font("DIN Alternate Bold", 50));
+        tituloImagen.setText("Test 1");
 
         tituloDescripcion.setLayoutX(50);
-        tituloDescripcion.setLayoutY(310);
+        tituloDescripcion.setLayoutY(imageView.getFitHeight()+200);
         tituloDescripcion.setText("DESCRIPTION:");
-        tituloDescripcion.setFont(Font.font("DIN Alternate Bold", 20));
+        tituloDescripcion.setFont(Font.font("DIN Alternate Bold", 50));
 
-        description.setLayoutX(50);
-        description.setLayoutY(350);
+        AnchorPane.setLeftAnchor(description,50.0);
+        AnchorPane.setTopAnchor(description,tituloDescripcion.getLayoutY()+ 105);
         description.prefHeight(100);
         description.prefWidth(500);
         description.maxHeight(100);
         description.maxWidth(500);
         description.setWrapText(true);
-        description.setFont(Font.font("DIN Alternate Bold", 16));
+        description.setFont(Font.font("DIN Alternate Bold", 20));
+        description.setText("This is a test");
 
-        addButton.setLayoutX(850);
-        addButton.setLayoutY(7);
+        AnchorPane.setRightAnchor(addButton,50.0);
+        AnchorPane.setTopAnchor(addButton,7.0);
         addButton.setPrefWidth(30);
         addButton.setPrefHeight(30);
         addButton.maxHeight(30);
@@ -381,46 +415,48 @@ public class CategoriesScreenController implements Initializable {
         });
 
         generateXML.setText("GENERATE MENU");
-        generateXML.setLayoutY(2);
-        generateXML.setLayoutX(580);
-        generateXML.setMaxHeight(80);
-        generateXML.setMaxWidth(200);
-        generateXML.setFont(Font.font("DIN Alternate Bold", 20));
+        AnchorPane.setTopAnchor(generateXML,5.0);
+        AnchorPane.setRightAnchor(generateXML,200.0);
+
+        generateXML.setFont(Font.font("DIN Alternate Bold", 15));
         generateXML.setStyle("-fx-background-color: white;");
 
-        generateXML.setOnAction(e->{
+       generateXML.setOnAction(e->{
             eb.getMenu();
         });
 
 
-        this.setButton(edit, 40, 60, (900 - 900 / 5) - 100, 50, "edit", "#f4c542", "white", 16);
+        this.setButton(edit, 40, 60, (float)(width - width / 5) - 150, 50, "edit", "#f4c542", "white", 16);
         edit.setVisible(true);
 
         List<Category> categorias = eb.getCategories();
         if(categorias.size()!=0) {
             Image imagen = new Image(FTPURL.getImageURL()+"/CategoriesImages/" + categorias.get(0).getImage());
             this.selectedImage = imagen;
+
             imageView.setImage(imagen);
+
             description.setText(categorias.get(0).getDescription());
             tituloImagen.setText(categorias.get(0).getName());
 
-            if ((categorias.size()) * 60 > 560) {
+            if ((categorias.size()) * 60 > height-40) {
                 leftPane.setPrefHeight((categorias.size()) * 60);
             } else {
-                leftPane.setPrefHeight(560);
+                leftPane.setPrefHeight(height-40);
                 scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
             }
             rigthPane.getChildren().addAll(edit, tituloDescripcion, imageView, description, tituloImagen);
             selectedCategory = categorias.get(0);
         }
 
-            leftPane.setPrefWidth(900 / 5);
+
+            leftPane.setPrefWidth(width / 5);
             leftPane.setDisable(false);
             leftPane.getChildren().clear();
             leftPane.setStyle("-fx-background-color: black");
 
 
-            topPane.getChildren().addAll(addButton,generateXML);
+           topPane.getChildren().addAll(addButton,generateXML);
 
             this.createLabels(categorias);
             scrollPane.setContent(leftPane);
@@ -440,8 +476,12 @@ public class CategoriesScreenController implements Initializable {
         contentPane = new StackPane();
         imageView = new ImageView(new Image("/Resources/draganddrop.png"));
 
-        this.setButton(saveButton, 40, 60, (900-900/5)-100, 50, "save","#f4c542","white",16);
-        this.setButton(cancelButton, 40, 80, (900-900/5)-185,50,"cancel","red","white",16);
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        double width = screenSize.getWidth();
+        double height = screenSize.getHeight();
+
+        this.setButton(saveButton, 40, 60, (float)(width-width/5)-150, 50, "save","#f4c542","white",16);
+        this.setButton(cancelButton, 40, 80, (float)(width-width/5)-240,50,"cancel","red","white",16);
         saveButton.setVisible(true);
         cancelButton.setVisible(true);
 
@@ -460,11 +500,9 @@ public class CategoriesScreenController implements Initializable {
 
         nameEnter.setLayoutX(50);
         nameEnter.setLayoutY(30);
-        nameEnter.setText("Name");
+        nameEnter.setPromptText("NAME");
 
-        descriptionEnter.setLayoutX(50);
-        descriptionEnter.setLayoutY(350);
-        descriptionEnter.setText("Add description of the category");
+
 
         contentPane.setLayoutX(50);
         contentPane.setLayoutY(80);
@@ -474,8 +512,15 @@ public class CategoriesScreenController implements Initializable {
         contentPane.setMaxHeight(contentPane.getPrefHeight());
         contentPane.setStyle("-fx-border-color: black");
 
-        imageView.setFitHeight(200);
-        imageView.setFitWidth(300);
+        imageView.setFitHeight(400);
+        imageView.setFitWidth(500);
+
+        tituloDescripcion.setLayoutY(530);
+
+        descriptionEnter.setLayoutX(50);
+        descriptionEnter.setLayoutY(600);
+        descriptionEnter.setPrefHeight(200);
+        descriptionEnter.setPromptText("Add description of the category");
 
         contentPane.setOnDragOver(new EventHandler<DragEvent>() {
             @Override
@@ -523,8 +568,9 @@ public class CategoriesScreenController implements Initializable {
 
         imageView = new ImageView();
         imageView.setImage(i);
-        imageView.setFitWidth(200);
-        imageView.setFitHeight(200);
+        imageView.setFitWidth(500);
+        imageView.setFitHeight(400);
+
         contentPane.getChildren().add(imageView);
 
     }
@@ -591,7 +637,7 @@ public class CategoriesScreenController implements Initializable {
         if(uploadedImage != null) {
             category.setImage(uploadedImage.getName());
             Path source = Paths.get(uploadedImage.getAbsolutePath());
-            Path dest = Paths.get(FTPURL.getImageURL()+"/CategoriesImages/" + uploadedImage.getName());
+            Path dest = Paths.get(FTPURL.getImgDest()+"/CategoriesImages/" + uploadedImage.getName());
             try {
                 Files.copy(source, dest, StandardCopyOption.REPLACE_EXISTING);
             } catch (Exception e) {

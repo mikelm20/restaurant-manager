@@ -16,6 +16,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import login.*;
+
+import java.awt.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -41,7 +43,7 @@ public class SignUpPageController implements Initializable {
     private TextField username;
     
     @FXML
-    private StackPane rootPane;
+    private AnchorPane rootPane;
     
     @FXML
     private Label errorLabel;
@@ -135,10 +137,21 @@ public class SignUpPageController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
+
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        double width = screenSize.getWidth();
+        double height = screenSize.getHeight();
+
+        rootPane.setPrefHeight(height);
+        rootPane.setPrefWidth(width);
+
+        leftPane.setPrefHeight(height);
+
         ImageView logo = new ImageView(new Image("/Resources/logo.png"));
+        singupButton.setLayoutX(width-600);
         logo.setFitHeight(50);
         logo.setFitWidth(130);
-        logo.setLayoutY(520);
+        logo.setLayoutY(height-100);
         logo.setLayoutX(8);
         leftPane.getChildren().add(logo);
         transition = new Transition();

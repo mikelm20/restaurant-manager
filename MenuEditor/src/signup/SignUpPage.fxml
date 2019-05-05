@@ -9,11 +9,11 @@
 <?import javafx.scene.text.Font?>
 
 <?import com.jfoenix.controls.JFXColorPicker?>
-<StackPane fx:id="rootPane" maxHeight="600" maxWidth="900" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #13355d;" xmlns="http://javafx.com/javafx/8.0.161" xmlns:fx="http://javafx.com/fxml/1" fx:controller="signup.SignUpPageController">
+<AnchorPane fx:id="rootPane" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8.0.161" xmlns:fx="http://javafx.com/fxml/1" fx:controller="signup.SignUpPageController">
    <children>
-      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #ffffff;">
+      <AnchorPane prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #ffffff;">
          <children>
-            <AnchorPane fx:id="leftPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="604.0" prefWidth="150.0" style="-fx-background-color: black;">
+            <AnchorPane fx:id="leftPane"  prefWidth="150.0" style="-fx-background-color: black;">
             </AnchorPane>
             <AnchorPane fx:id="topPane" maxWidth="700" prefWidth="700" maxHeight="100" prefHeight="100" style="-fx-background-color: #f4c542;" layoutX="60" layoutY="40">
             <Label fx:id="w_letter" prefWidth="800" maxWidth="800" layoutX="70" layoutY="10" style="-fx-font-family: 'Roboto Bold'"  text="W">
@@ -33,18 +33,18 @@
             </Label>
             </AnchorPane>
 
-            <JFXTextField fx:id="username" layoutX="300" layoutY="150.0" prefHeight="60" prefWidth="360" promptText="Username" />
-            <JFXPasswordField fx:id="password" layoutX="300" layoutY="200.0" prefHeight="60" prefWidth="360" promptText="Password" />
-            <JFXPasswordField fx:id="confpassword" layoutX="300" layoutY="250.0" prefHeight="60" prefWidth="360" promptText="Confirm Password" />
-            <JFXTextField fx:id="restaurantName" layoutX="300" layoutY="300.0" prefHeight="60" prefWidth="360" promptText="Restaurant Name" />
-            <JFXButton fx:id="singupButton" buttonType="RAISED" defaultButton="true" layoutX="630.0" layoutY="500.0" onAction="#onHandlerClick" prefHeight="38.0" prefWidth="110.0" style="-fx-background-color: #f4c542;" text="Ok" textFill="WHITE">
+            <JFXTextField fx:id="username" layoutX="500" layoutY="200.0" prefHeight="60" prefWidth="360" promptText="Username" />
+            <JFXPasswordField fx:id="password" layoutX="500" layoutY="300.0" prefHeight="60" prefWidth="360" promptText="Password" />
+            <JFXPasswordField fx:id="confpassword" layoutX="500" layoutY="400.0" prefHeight="60" prefWidth="360" promptText="Confirm Password" />
+            <JFXTextField fx:id="restaurantName" layoutX="500" layoutY="500.0" prefHeight="60" prefWidth="360" promptText="Restaurant Name" />
+            <JFXButton fx:id="singupButton" buttonType="RAISED" defaultButton="true"  layoutY="680.0" onAction="#onHandlerClick" prefHeight="38.0" prefWidth="110.0" style="-fx-background-color: #f4c542;" text="Ok" textFill="WHITE">
                <font>
                   <Font size="19.0" />
                </font></JFXButton>
-            <JFXColorPicker fx:id="colorPicker" layoutX="300" layoutY="400.0"></JFXColorPicker>
-            <JFXColorPicker fx:id="colorSecundarioPicker" layoutX="300" layoutY="450.0"></JFXColorPicker>
+            <JFXColorPicker fx:id="colorPicker" layoutX="500" layoutY="600.0"></JFXColorPicker>
+            <JFXColorPicker fx:id="colorSecundarioPicker" layoutX="500" layoutY="650.0"></JFXColorPicker>
             <Label fx:id="errorLabel" layoutX="292.0" layoutY="500" prefHeight="22.0" prefWidth="289.0" />
          </children>
       </AnchorPane>
    </children>
-</StackPane>
+</AnchorPane>

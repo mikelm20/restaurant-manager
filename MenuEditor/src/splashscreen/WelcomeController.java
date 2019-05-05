@@ -5,6 +5,7 @@ package splashscreen;/*
  */
 
 
+import java.awt.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -32,7 +33,7 @@ public class WelcomeController implements Initializable {
     private ImageView imageLogo;
 
     @FXML
-    private StackPane rootPane;
+    private AnchorPane rootPane;
     @FXML
     private AnchorPane backPane;
 
@@ -59,7 +60,18 @@ public class WelcomeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        double width = screenSize.getWidth();
+        double height = screenSize.getHeight();
+
+        rootPane.setPrefWidth(width);
+        rootPane.setPrefHeight(height);
+
+
         LoginBuisness lb = new LoginBuisness();
+
+
+
         new FadeIn(rootPane).setSpeed(0.7).play();
         new SlideInRight(backPane).setSpeed(1).play();
         new ZoomInUp(imageLogo).setSpeed(0.5).play();

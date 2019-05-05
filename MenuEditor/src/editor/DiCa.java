@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
+@Table(name = "DiCa", schema = "menu", catalog = "")
 public class DiCa {
     private int iddiCa;
     private Dish dishesByDishesIdDishes;

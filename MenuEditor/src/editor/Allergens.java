@@ -1,12 +1,10 @@
 package editor;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
+@Table(name = "Allergens", schema = "menu", catalog = "")
 public class Allergens {
     private int id;
     private String image;

@@ -11,6 +11,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
 
+import java.awt.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -19,7 +20,7 @@ public class SelectionMenuController implements Initializable {
 
 
     @FXML
-    private StackPane rootPane;
+    private AnchorPane rootPane;
     @FXML
     private JFXButton dishesButton;
     @FXML
@@ -43,7 +44,22 @@ public class SelectionMenuController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb){
 
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        double width = screenSize.getWidth();
+        double height = screenSize.getHeight();
 
+        rootPane.setPrefWidth(width);
+        rootPane.setPrefHeight(height);
+
+        System.out.println(width);
+
+        AnchorPane.setLeftAnchor(rigthPane,width/2);
+        AnchorPane.setRightAnchor(leftPane,width/2);
+
+        leftPane.setPrefHeight(height);
+        rigthPane.setPrefHeight(height);
+        leftPane.setPrefWidth(width/2);
+        rigthPane.setPrefWidth(width/2);
 
         spinner.setVisible(false);
         categoriesButton.setTextFill(Paint.valueOf("white"));
@@ -72,13 +88,13 @@ public class SelectionMenuController implements Initializable {
 
         categoriesButton.setOnAction(e->{
 
-            changeScreen("/editor/CategoriesScreen.fxml");
+           changeScreen("/editor/CategoriesScreen.fxml");
 
         });
 
         dishesButton.setOnAction(e->{
 
-            changeScreen("/editor/DishesScreen.fxml");
+           changeScreen("/editor/DishesScreen.fxml");
 
         });
 
@@ -87,6 +103,7 @@ public class SelectionMenuController implements Initializable {
         new SlideInDown(leftPane).play();
         new SlideInUp(rigthPane).play();
         transition.makeFadeInTransition(rootPane, 600);
+
 
     }
 
