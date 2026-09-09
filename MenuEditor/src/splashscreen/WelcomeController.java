@@ -1,8 +1,4 @@
-package splashscreen;/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+package splashscreen;
 
 
 import java.awt.*;
@@ -23,7 +19,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
-import login.LoginBuisness;
+import login.LoginBusiness;
 
 import javax.persistence.Persistence;
 
@@ -68,7 +64,7 @@ public class WelcomeController implements Initializable {
         rootPane.setPrefHeight(height);
 
 
-        LoginBuisness lb = new LoginBuisness();
+        LoginBusiness lb = new LoginBusiness();
 
 
 

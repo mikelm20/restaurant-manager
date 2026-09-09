@@ -42,7 +42,7 @@
                   <Font size="19.0" />
                </font></JFXButton>
             <JFXColorPicker fx:id="colorPicker" layoutX="500" layoutY="600.0"></JFXColorPicker>
-            <JFXColorPicker fx:id="colorSecundarioPicker" layoutX="500" layoutY="650.0"></JFXColorPicker>
+            <JFXColorPicker fx:id="secondaryColorPicker" layoutX="500" layoutY="650.0"></JFXColorPicker>
             <Label fx:id="errorLabel" layoutX="292.0" layoutY="500" prefHeight="22.0" prefWidth="289.0" />
          </children>
       </AnchorPane>

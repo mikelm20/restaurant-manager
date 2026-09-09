@@ -1,27 +1,46 @@
 package editor;
 
+/**
+ * Locations of the shared FTP folder the menu editor writes to.
+ *
+ * The restaurant's display devices read the generated menu.xml and the
+ * category/dish images from this folder. Override the defaults with the
+ * system property -Dmenu.ftp.root=/path (or the MENU_FTP_ROOT environment
+ * variable) when launching the application.
+ */
 public class FTPURL {
 
+    private static final String DEFAULT_ROOT = "/srv/ftp/restaurant";
 
-
-    public static String getImageURL(){
-        String imageURL="file:/srv/ftp/restaurant/images";
-        return imageURL;
+    private static String root() {
+        String prop = System.getProperty("menu.ftp.root");
+        if (prop != null && !prop.isEmpty()) {
+            return prop;
+        }
+        String env = System.getenv("MENU_FTP_ROOT");
+        if (env != null && !env.isEmpty()) {
+            return env;
+        }
+        return DEFAULT_ROOT;
     }
 
+    /** file: URL of the images folder, used to load previews in the editor. */
+    public static String getImageURL() {
+        return "file:" + root() + "/images";
+    }
+
+    /** Folder where menu.xml is written. */
     public static String getMenuURL() {
-        String menuURL="/srv/ftp/restaurant/menu";
-        return menuURL;
+        return root() + "/menu";
     }
 
-    public static String getImgDest(){
-        String imageURL="/srv/ftp/restaurant/images";
-        return imageURL;
+    /** Folder where uploaded images are copied to. */
+    public static String getImgDest() {
+        return root() + "/images";
     }
 
-    public static String getFTP(){
-        String imageURL="ftp/restaurant/images";
-        return imageURL;
-
+    /** Relative image path written into menu.xml for the display devices. */
+    public static String getFTP() {
+        return "ftp/restaurant/images";
     }
 }

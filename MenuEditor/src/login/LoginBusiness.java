@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package login;
 
 import javax.persistence.EntityManager;
@@ -12,16 +7,12 @@ import java.time.Duration;
 import java.util.List;
 
 
-/**
- *
- *
- */
-public class LoginBuisness{
+public class LoginBusiness{
     
     private EntityManagerFactory emf = javax.persistence.Persistence.createEntityManagerFactory("LoginPU");
     private EntityManager em = emf.createEntityManager();
 
-    public LoginBuisness()
+    public LoginBusiness()
     {
 
     }

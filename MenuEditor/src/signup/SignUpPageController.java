@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package signup;
 
 import animatefx.animation.*;
@@ -57,7 +52,7 @@ public class SignUpPageController implements Initializable {
     private JFXColorPicker colorPicker;
 
     @FXML
-    private JFXColorPicker colorSecundarioPicker;
+    private JFXColorPicker secondaryColorPicker;
     @FXML
     private AnchorPane topPane;
 
@@ -97,10 +92,10 @@ public class SignUpPageController implements Initializable {
         regisUser.setUsername(username.getText());
         regisUser.setPassword(password.getText());
         regisUser.setColor("#"+Integer.toHexString(colorPicker.getValue().hashCode()).substring(0, 6));
-        regisUser.setColorSecundario("#"+Integer.toHexString(colorSecundarioPicker.getValue().hashCode()).substring(0, 6));
-        regisUser.setNombre(restaurantName.getText());
+        regisUser.setSecondaryColor("#"+Integer.toHexString(secondaryColorPicker.getValue().hashCode()).substring(0, 6));
+        regisUser.setName(restaurantName.getText());
         
-        LoginBuisness persister = new LoginBuisness();
+        LoginBusiness persister = new LoginBusiness();
         code = persister.persistLoginData(regisUser,confpassword.getText());
         
         

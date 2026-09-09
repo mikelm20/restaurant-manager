@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package login;
 
 import java.io.Serializable;
@@ -25,9 +20,9 @@ public class LoginData implements Serializable {
 
     private String color;
 
-    private String colorSecundario;
+    private String secondaryColor;
 
-    private String nombre;
+    private String name;
 
 
 
@@ -75,20 +70,20 @@ public class LoginData implements Serializable {
 
     public void setColor(String color){this.color=color;}
 
-    public String getColorSecundario() {
-        return colorSecundario;
+    public String getSecondaryColor() {
+        return secondaryColor;
     }
 
-    public void setColorSecundario(String colorSecundario) {
-        this.colorSecundario = colorSecundario;
+    public void setSecondaryColor(String secondaryColor) {
+        this.secondaryColor = secondaryColor;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getName() {
+        return name;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setName(String name) {
+        this.name = name;
     }
 
    

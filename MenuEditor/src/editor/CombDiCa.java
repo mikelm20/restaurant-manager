@@ -4,12 +4,12 @@ import java.util.List;
 
 public class CombDiCa {
 
-    private Category categoria;
+    private Category category;
     private List<Dish> dishes;
 
-    public void setCategory(Category categoria){
+    public void setCategory(Category category){
 
-        this.categoria = categoria;
+        this.category = category;
     }
 
     public void setDishes(List<Dish> dishes){
@@ -17,9 +17,9 @@ public class CombDiCa {
         this.dishes = dishes;
     }
 
-    public Category getCategoria(){
+    public Category getCategory(){
 
-        return this.categoria;
+        return this.category;
     }
 
     public List<Dish> getDishes(){

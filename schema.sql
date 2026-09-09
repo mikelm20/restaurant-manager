@@ -1,4 +1,5 @@
--- MySQL Workbench Forward Engineering
+-- Restaurant Manager database schema (MySQL 5.7+)
+-- Creates the login_db and menu schemas used by the Menu Editor and seeds the 14 EU allergens.
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
@@ -37,8 +38,8 @@ CREATE TABLE IF NOT EXISTS `login_db`.`LoginData` (
   `username` VARCHAR(45) NOT NULL,
   `password` VARCHAR(45) NOT NULL,
   `color` VARCHAR(45) NULL DEFAULT NULL,
-  `colorSecundario` VARCHAR(45) NULL DEFAULT NULL,
-  `nombre` VARCHAR(500) NULL DEFAULT NULL,
+  `secondaryColor` VARCHAR(45) NULL DEFAULT NULL,
+  `name` VARCHAR(500) NULL DEFAULT NULL,
   PRIMARY KEY (`idUser`),
   UNIQUE INDEX `username_UNIQUE` (`username` ASC))
 ENGINE = InnoDB
@@ -161,6 +162,27 @@ AUTO_INCREMENT = 14
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci;
 
+
+
+-- -----------------------------------------------------
+-- Seed data: the 14 allergens the editor can tag a dish with.
+-- The image column names the icon in MenuEditor/src/Resources/AWIcons.
+-- -----------------------------------------------------
+INSERT INTO `menu`.`Allergens` (`id`, `image`) VALUES
+  (1, 'gluten.png'),
+  (2, 'crustaceans.png'),
+  (3, 'eggs.png'),
+  (4, 'fish.png'),
+  (5, 'peanuts.png'),
+  (6, 'soy.png'),
+  (7, 'milk.png'),
+  (8, 'nuts.png'),
+  (9, 'celery.png'),
+  (10, 'mustard.png'),
+  (11, 'sesame.png'),
+  (12, 'sulphites.png'),
+  (13, 'lupin.png'),
+  (14, 'molluscs.png');
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

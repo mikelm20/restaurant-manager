@@ -7,7 +7,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import datatype.*;
-import login.LoginBuisness;
+import login.LoginBusiness;
 import login.LoginData;
 import utils.XMLParseUtils;
 
@@ -21,37 +21,37 @@ public class EditorBusiness {
 
     public List<Category> getCategories(){
 
-        List<Category> categorias = (List<Category>)em.createQuery("SELECT c FROM Category c").getResultList();
+        List<Category> categories = (List<Category>)em.createQuery("SELECT c FROM Category c").getResultList();
 
-        return categorias;
+        return categories;
 
     }
 
     public String getImage(String name)
     {
-        Category categoria = (Category)em.createQuery("SELECT c FROM Category c WHERE c.name=:name")
+        Category category = (Category)em.createQuery("SELECT c FROM Category c WHERE c.name=:name")
                 .setParameter("name", name)
                 .getSingleResult();
 
-        return categoria.getImage();
+        return category.getImage();
 
     }
 
     public Category getCategory(String name){
-        Category categoria = (Category)em.createQuery("SELECT c FROM Category c WHERE c.name=:name")
+        Category category = (Category)em.createQuery("SELECT c FROM Category c WHERE c.name=:name")
                 .setParameter("name", name)
                 .getSingleResult();
 
-        return categoria;
+        return category;
 
     }
 
-    public void updateCategory(Category categoria,int id)
+    public void updateCategory(Category category,int id)
     {
         Category uCategory = em.find(Category.class,id);
-        uCategory.setName(categoria.getName());
-        uCategory.setDescription(categoria.getDescription());
-        uCategory.setImage(categoria.getImage());
+        uCategory.setName(category.getName());
+        uCategory.setDescription(category.getDescription());
+        uCategory.setImage(category.getImage());
         em.getTransaction().begin();
         em.persist(uCategory);
         em.getTransaction().commit();
@@ -60,34 +60,34 @@ public class EditorBusiness {
 
     public void removeCategory(int id)
     {
-       Category categoria = em.find(Category.class, id);
+       Category category = em.find(Category.class, id);
        em.getTransaction().begin();
-       em.remove(categoria);
+       em.remove(category);
        em.getTransaction().commit();
     }
 
-    public void addCategory(Category categoria){
+    public void addCategory(Category category){
 
         em.getTransaction().begin();
-        em.persist(categoria);
+        em.persist(category);
         em.getTransaction().commit();
 
     }
 
     public List<Dish> getDishes(){
 
-        List<Dish> platos = (List<Dish>)em.createQuery("SELECT d FROM Dish d").getResultList();
+        List<Dish> dishes = (List<Dish>)em.createQuery("SELECT d FROM Dish d").getResultList();
 
-        return platos;
+        return dishes;
 
     }
 
     public Dish getDish(String name){
-        Dish plato = (Dish)em.createQuery("SELECT d FROM Dish d WHERE d.name=:name")
+        Dish dish = (Dish)em.createQuery("SELECT d FROM Dish d WHERE d.name=:name")
                 .setParameter("name", name)
                 .getSingleResult();
 
-        return plato;
+        return dish;
 
     }
 
@@ -99,9 +99,9 @@ public class EditorBusiness {
 
     public List<Allergens> getAllergens()
     {
-        List<Allergens> alergenos = (List<Allergens>)em.createQuery("SELECT a FROM Allergens a").getResultList();
+        List<Allergens> allergens = (List<Allergens>)em.createQuery("SELECT a FROM Allergens a").getResultList();
 
-        return alergenos;
+        return allergens;
 
     }
 
@@ -150,14 +150,14 @@ public class EditorBusiness {
                 .setParameter("idDish",idDish)
                 .getResultList();
 
-        List<Allergens> alergenos = new ArrayList<Allergens>();
+        List<Allergens> allergens = new ArrayList<Allergens>();
 
         for(DiAl comb : combs)
         {
-            alergenos.add(comb.getAllergensByAllergensId());
+            allergens.add(comb.getAllergensByAllergensId());
         }
 
-        return alergenos;
+        return allergens;
 
     }
 
@@ -193,7 +193,7 @@ public class EditorBusiness {
         em.getTransaction().commit();
 
         uDish = em.find(Dish.class,id);
-        Category categoria = getCategory(categoryName);
+        Category category = getCategory(categoryName);
 
 
         DiCa comb;
@@ -207,7 +207,7 @@ public class EditorBusiness {
             comb = new DiCa();
         }
 
-        comb.setCategoriesByCategoriesIdcategories(categoria);
+        comb.setCategoriesByCategoriesIdcategories(category);
         comb.setDishesByDishesIdDishes(uDish);
 
         em.getTransaction().begin();
@@ -234,9 +234,9 @@ public class EditorBusiness {
                 .setParameter("name", newDish.getName())
                 .getSingleResult();
 
-        Category categoria = getCategory(categoryName);
+        Category category = getCategory(categoryName);
         DiCa comb = new DiCa();
-        comb.setCategoriesByCategoriesIdcategories(categoria);
+        comb.setCategoriesByCategoriesIdcategories(category);
         comb.setDishesByDishesIdDishes(dish);
 
         em.getTransaction().begin();
@@ -267,12 +267,12 @@ public class EditorBusiness {
     public void getMenu(){
 
         List<CombDiCa> comb = new ArrayList<CombDiCa>();
-       List<Category> categorias = this.getCategories();
+       List<Category> categories = this.getCategories();
 
-       for(Category categoria : categorias){
+       for(Category category : categories){
            CombDiCa element = new CombDiCa();
-           element.setCategory(categoria);
-           element.setDishes(this.getDishesByCategory(categoria.getIdcategories()));
+           element.setCategory(category);
+           element.setDishes(this.getDishesByCategory(category.getIdcategories()));
            comb.add(element);
        }
 
@@ -283,7 +283,7 @@ public class EditorBusiness {
        if(comb !=null){
            for (CombDiCa combDica:comb) {
                List<datatype.Dish> listDish = new ArrayList<>();
-               if(combDica!=null && combDica.getCategoria()!=null && combDica.getDishes()!=null){
+               if(combDica!=null && combDica.getCategory()!=null && combDica.getDishes()!=null){
                    for (Dish dish:combDica.getDishes()) {
                        if(dish!=null){
                            EnergeticComposition energeticComposition = new EnergeticComposition("g/100g",new Energy("Kcal",dish.getEnergy().floatValue()),dish.getFat().floatValue(),dish.getSaturedFat().floatValue(),dish.getCarboHydrates().floatValue(),dish.getSugars().floatValue(),dish.getProteins().floatValue(),dish.getSalt().floatValue());
@@ -299,17 +299,17 @@ public class EditorBusiness {
                            listDish.add(new datatype.Dish(dish,energeticComposition,allergenList,warningList));
                        }
                    }
-                   listCategories.add(new datatype.Category(combDica.getCategoria(),listDish));
+                   listCategories.add(new datatype.Category(combDica.getCategory(),listDish));
                }
            }
        }
 
-       LoginBuisness lb = new LoginBuisness();
+       LoginBusiness lb = new LoginBusiness();
        LoginData user = lb.getUserData();
        menu.setCategories(listCategories);
-       menu.setRestaurantName(user.getNombre());
+       menu.setRestaurantName(user.getName());
        menu.setPrimaryColor(user.getColor());
-       menu.setSecondaryColor(user.getColorSecundario());
+       menu.setSecondaryColor(user.getSecondaryColor());
 
         XMLParseUtils.updateMenu(FTPURL.getMenuURL()+"/menu.xml",menu);
 
